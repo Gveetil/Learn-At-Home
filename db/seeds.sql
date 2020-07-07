@@ -6,25 +6,24 @@ INSERT INTO `AccessTypes` (`id`,`name`) VALUES
 ('3', 'Parent'),
 ('4', 'Admin');
 
-INSERT INTO `Users`(`id`,`userName`,`firstName`, `lastName`,`password`, `AccessTypeId`)
+INSERT INTO `Users`(`id`,`userName`,`firstName`, `lastName`,`password`,`phone`,`email`,`AccessTypeId`)
 VALUES
-('1', 'dprice', 'Dylan', 'Price', '$2a$10$sgjuiLpGaMbth5DyqBSv9ekqBMWq9PSxaybA/PYePnJirXbcbJFV6', '1'),
-('2', 'Lharrison', 'Lily', 'Harrison', '$2a$10$zZx32mLkZ1d85AayFjudueX7dBq045LtUUSfpNGG8eI12eplyl4h2', '1'),
-('3', 'Tlee', 'Tom', 'Lee', '$2a$10$5C2SB9soqRkqnWK0KUx2E.CsrDx.Mf40.pxRNMTrlUj7w2rjXv/j.', '1'),
-('4', 'gvee', 'George', 'Vee', '$2a$10$//pHbEHjMk29vV8lPrpiAOKjkuplYmVpl/bAWSs1NLNQP2ItMSclS', '1'),
-('10', 'ev1', 'Emily', 'Vee', '', '2'),
-('11', 'ev2', 'Grace', 'Vee', '', '2'),
-('12', 'ev3', 'Jasmine', 'Vee', '', '2'),
-('13', 'ev4', 'Jasmine', 'Vee', '', '2'),
-('14', 'ev5', 'Jasmine', 'Vee', '', '2'),
-('15', 'ev6', 'Jasmine', 'Vee', '', '2'),
-('16', 'ev7', 'Jasmine', 'Vee', '', '2'),
-('17', 'ev8', 'Jasmine', 'Vee', '', '2'),
-('18', 'ev9', 'Jasmine', 'Vee', '', '2'),
-('19', 'ev11', 'Jasmine', 'Vee', '', '2'),
-('20', 'ev12', 'Jasmine', 'Vee', '', '2'),
-('30', 'ev14', 'Jasmine', 'Vee', '', '3');
-
+('1', 'dprice', 'Dylan', 'Price', '$2a$10$sgjuiLpGaMbth5DyqBSv9ekqBMWq9PSxaybA/PYePnJirXbcbJFV6', '(09) 0533 5366', 'dprice@fakemail.com', '1'),
+('2', 'lhall', 'Lily', 'Hall', '$2a$10$6HUAMpSLMTnyZwl9e/NOPOUshOmjXXZysGwHCH43jngqtXp/.jVeW', '(09) 2286 0460', 'lhall@fakemail.com', '1'),
+('3', 'edavis', 'Emily', 'Davis', '$2a$10$vr5uL/3G09RPGQYpwLGf8O4xKjYwn2U2DGqHRlCkyoMMgZ8k3GUCW', '(09) 8996 0863', 'edavis@fakemail.com','1'),
+('4', 'dchen', 'David', 'Chen', '$2a$10$UwUs.oWt4fog7ncSX9MN4.mvkXe2FasK7aH8BIcO82Ps8b.CMo/Iy', '(09) 9903 4032', 'dchen@fakemail.com', '1'),
+('10', 'tlee', 'Thomas', 'Lee', '$2a$10$tPfLHlV4aKg41uWJXVW3G.xttn5wP0qFxcjX9JWFiyebQ2K9MNMg6', '(09) 0484 0908', 'tlee@fakemail.com', '2'),
+('11', 'hjones', 'Holly', 'Jones', '$2a$10$LHE5TLlZwrrrOxOuoa/xluZNQBYBqmf6qtm.noplH/5mAI/pZabga', '(09) 7118 3813', 'hjones@fakemail.com', '2'),
+('12', 'amiller', 'Amy', 'Miller', '$2a$10$YVLzvTqfjzF9ekSPW.b1t.iFWEZD/o4jgzrRt2YMllF/6CVCGST42', '(09) 1741 4400', 'amiller@fakemail.com', '2'),
+('13', 'mpatil', 'Myra', 'Patil', '$2a$10$0qkOSmiThcYIX6Paqx8L6.2pytsdycZpPO396RMlWOoo3U.sRb5ii', '(09) 3597 9499', 'mpatil@fakemail.com', '2'),
+('14', 'dtran', 'Daisy', 'Tran', '$2a$10$XKpwhOX4YNdZk2CsMp41HeFp3xsQY4NcqZAhcs0GIfafvwzpnqcwe', '(09) 3238 3988', 'dtran@fakemail.com', '2'),
+('15', 'gvee', 'George', 'Vee', '$2a$10$jQwC3qbd3ZQ.AZ6AEqQ5gOJ5.jodFlvIsso0RTTVcKj4nUkJoyYvu', '(09) 4872 7834', 'gvee@fakemail.com', '2'),
+('16', 'rlopez', 'Rose', 'Lopez', '$2a$10$M8.q8TW55eEHzkKl1ImZpeJ7WJUadgbpKbnl445UeW593uqEOl/r.', '(09) 6290 7889', 'rlopez@fakemail.com', '2'),
+('17', 'akour', 'Anand', 'Kour', '$2a$10$4c4tRsUOFYw1ZGxMNP8uLO81kW2K8lP04AOEIPbem0et4G5xua/rG', '(09) 9415 1179', 'akour@fakemail.com', '2'),
+('18', 'slee', 'Shannon', 'Lee', '$2a$10$DC4z3chiekezL8or9LjtR.Rjd/QhN9vQQkSUp8N2KdX4RuE7HH2eG', '(09) 8256 6791', 'slee@fakemail.com','2'),
+('19', 'sgray', 'Scott', 'Gray', '$2a$10$.yHRX5qVro.bmCP7quW4G.t/CWSzxxd5x8sm70KdudJvTE9W/Yxoy', '(09) 4742 8675', 'sgray@fakemail.com', '2'),
+('20', 'jperry', 'James', 'Perry', '$2a$10$QkcOaSVit/rxE207WbNo9.KL/YWeqeNUJqqCCPIL8VBOctx1HkXfq', '(09) 5232 0583', 'jperry@fakemail.com', '2'),
+('30', 'klee', 'Kevin', 'Lee', '$2a$10$O/yoEY9MdI98lIA3cfKCmOH7ghVSS54sKEPkI84onrr23hprhG4z.', '(09) 5750 4337', 'klee@fakemail.com', '3');
 
 INSERT INTO `Grades` (`id`,`name`) VALUES 
 ('1','Prep'), 
