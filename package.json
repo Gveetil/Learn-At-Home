@@ -1,0 +1,39 @@
+{
+  "name": "learn-at-home",
+  "version": "1.0.0",
+  "description": "Learn@Home is a home-schooling solution that helps teachers and students stay up to date with their lessons and coursework.",
+  "main": "server.js",
+  "scripts": {
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "client": "cd client && npm run start",
+    "install": "cd client && npm install",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gveetil/Learn-At-Home.git"
+  },
+  "author": "gveetil",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gveetil/Learn-At-Home/issues"
+  },
+  "homepage": "https://github.com/Gveetil/Learn-At-Home#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "if-env": "^1.0.4",
+    "mysql2": "^2.1.0",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "sequelize": "^6.3.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "nodemon": "^2.0.4"
+  }
+}

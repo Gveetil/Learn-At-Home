@@ -1,0 +1,10 @@
+
+# server dependencies
+/node_modules
+package-lock.json
+.env.local
+
+# client dependencies
+/client/node_modules
+/client/package-lock.json
+/client/build
