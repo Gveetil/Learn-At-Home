@@ -1,4 +1,6 @@
 const express = require("express");
+const session = require("express-session");
+const passport = require("./config/passport");
 const routes = require("./routes");
 const db = require("./models");
 
@@ -9,6 +11,13 @@ var PORT = process.env.PORT || 3001;
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// Configure express to use sessions and passport middleware for authentication
+app.use(
+    session({ secret: "keyboard cat", resave: true, saveUninitialized: true })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Serve up static assets for production mode (on heroku)
 if (process.env.NODE_ENV === "production") {

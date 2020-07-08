@@ -31,6 +31,8 @@ CREATE TABLE IF NOT EXISTS `Users` (
     `password` VARCHAR(255) NOT NULL, 
     `phone` varchar(100),
     `email` varchar(255),
+    `createdAt` DATETIME DEFAULT CURRENT_TIMESTAMP, 
+    `updatedAt` DATETIME DEFAULT CURRENT_TIMESTAMP, 
     `AccessTypeId` INTEGER NOT NULL, 
     PRIMARY KEY (`id`), 
     FOREIGN KEY (`AccessTypeId`) REFERENCES `AccessTypes` (`id`) 
