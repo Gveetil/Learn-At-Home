@@ -1,5 +1,6 @@
 const express = require("express");
 const session = require("express-session");
+const logger = require("morgan");
 const passport = require("./config/passport");
 const routes = require("./routes");
 const db = require("./models");
@@ -11,6 +12,7 @@ var PORT = process.env.PORT || 3001;
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(logger("dev"));
 
 // Configure express to use sessions and passport middleware for authentication
 app.use(

@@ -1,0 +1,43 @@
+import { withStyles } from "@material-ui/core/styles";
+import theme from '../utils/theme';
+import Button from "@material-ui/core/Button";
+
+// Styled components for re-use within the applicaiton
+
+// Navigation Bar Link Button
+export const NavButton = withStyles({
+    root: {
+        color: theme.palette.header.text,
+        marginRight: theme.spacing(1),
+        '&$selected': {
+            color: theme.palette.header.activeText,
+        },
+        '&:hover': {
+            color: theme.palette.header.hoverText,
+        },
+        '&:focus': {
+            color: theme.palette.header.hoverText,
+        }
+    },
+    selected: {},
+    label: {
+        textTransform: 'none',
+    },
+})(Button);
+
+export const RoundedButton = withStyles({
+    root: {
+        color: theme.palette.getContrastText(theme.secondary[500]),
+        backgroundColor: theme.secondary[500],
+        '&:hover': {
+            backgroundColor: theme.secondary[700],
+        },
+        paddingLeft: theme.spacing(3),
+        paddingRight: theme.spacing(3),
+        borderRadius: "16px",
+    },
+    label: {
+        fontWeight: "300",
+    }
+})(Button);
+

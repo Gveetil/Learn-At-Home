@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const passport = require("../../config/passport");
 const userController = require("../../controllers/userController");
-const isAuthenticated = require("../../config/middleware/isAuthenticated");
 
 // Matches with "/api/user"
 
@@ -9,9 +8,9 @@ const isAuthenticated = require("../../config/middleware/isAuthenticated");
 router.route("/login")
   .post(passport.authenticate("local"), userController.getUser);
 
-// Check user authentication before accessing user details
+// Return current user
 router.route("/getUser")
-  .get(isAuthenticated, userController.getUser);
+  .get(userController.getUser);
 
 router.get("/logout", userController.logout);
 

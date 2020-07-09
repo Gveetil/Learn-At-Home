@@ -10,6 +10,6 @@ module.exports = {
   logout: function (request, response) {
     request.session.destroy();
     request.logout();
-    return response.status(200).json({ user: {} });
+    return response.status(200).json({});
   }
 };

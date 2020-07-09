@@ -1,30 +1,28 @@
 import React from 'react';
-import path from 'path';
 import { withStyles } from "@material-ui/core/styles";
-
-// Path to images folder
-const IMAGE_FOLDER_PATH = path.join(process.env.PUBLIC_URL, "/images/");
+import useAuthentication from "./utils/useAuthentication";
+import AppDashboard from './pages/AppDashboard';
+import Login from "./pages/Login";
 
 // Styling for the application page body
 const styles = theme => ({
   "@global": {
     body: {
-      margin: 0,
-      minHeight: "100vh",
-      fontFamily: "'Mada', 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-      backgroundImage: `url(${IMAGE_FOLDER_PATH}background.jpg)`,
-      backgroundPosition: "center",
-      backgroundSize: "cover",
-      backgroundRepeat: "no-repeat",
-      backgroundColor: "#000",
+      fontFamily: "'Mada', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     },
   }
 });
 
+// Renders the main application root component
 function App() {
+  const auth = useAuthentication();
+
   return (
-    <div > Learn@Home
-    </div>
+    <>
+      {auth.user.authenticated ?
+        <AppDashboard handleLogout={auth.handleLogout} /> :
+        <Login handleLogin={auth.handleLogin} />}
+    </>
   );
 }
 
