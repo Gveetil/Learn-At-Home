@@ -8,21 +8,12 @@ import Chip from '@material-ui/core/Chip';
 import Hidden from '@material-ui/core/Hidden';
 import MenuIcon from '@material-ui/icons/Menu';
 import { NavButton } from './styles';
-import { useAppContext } from "../context/AppContext";
+import { AppContextAction, useAppContext } from "../context/AppContext";
 import PersonIcon from '@material-ui/icons/Person';
 import AppLogo from '../components/AppLogo';
 
-const drawerWidth = 0;
-
 // Styles used by this component
 const useStyles = makeStyles((theme) => ({
-    menuButton: {
-        marginRight: 36,
-        //marginRight: theme.spacing(2),
-    },
-    title: {
-        flexGrow: 1,
-    },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
         transition: theme.transitions.create(['width', 'margin'], {
@@ -31,33 +22,50 @@ const useStyles = makeStyles((theme) => ({
         }),
     },
     appBarShift: {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
+        marginLeft: theme.leftNavBarWidth,
+        width: `calc(100% - ${theme.leftNavBarWidth}px)`,
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
         }),
     },
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    hide: {
+        [theme.breakpoints.up('sm')]: {
+            display: 'none',
+        },
+    },
+    title: {
+        flexGrow: 1,
+    },
 }));
 
 // Application header / navigation toolbar
 export default function NavBar(props) {
-    const [state, _] = useAppContext();
+    const [state, dispatch] = useAppContext();
     const classes = useStyles();
 
+    const handleLeftNavToggle = () => {
+        dispatch({ type: AppContextAction.SHOW_LEFT_NAV, show: !state.showLeftNav });
+    };
+
     return (
-        <AppBar position="fixed"
+        <AppBar position="static"
             className={clsx(classes.appBar, {
-                [classes.appBarShift]: props.open,
-            })}>
+                [classes.appBarShift]: state.showLeftNav,
+            })}
+            className={classes.appBar}
+        >
             <Toolbar>
                 <IconButton
                     color="inherit"
                     aria-label="open drawer"
-                    onClick={props.handleDrawerOpen}
+                    onClick={handleLeftNavToggle}
                     edge="start"
                     className={clsx(classes.menuButton, {
-                        [classes.hide]: props.open,
+                        [classes.hide]: state.showLeftNav,
                     })}
                 >
                     <MenuIcon />

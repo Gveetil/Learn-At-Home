@@ -8,6 +8,7 @@ const AppContextAction = {
     SHOW_DIALOG: "SHOW_DIALOG", // Sets the message to be displayed in the dialog
     LOADING: "LOADING",         // Sets the loading status
     CURRENT_USER: "CURRENT_USER",       // Sets the current user
+    SHOW_LEFT_NAV: "SHOW_LEFT_NAV",     // Shows / hides the left navigation panel
 }
 
 // The currently available user access types in the system
@@ -23,6 +24,7 @@ const defaultState = {
         message: "",
     },
     loading: false,
+    showLeftNav: true,
     user: {
         authenticated: false,
     },
@@ -46,6 +48,13 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 loading: action.show
+            }
+        }
+        case AppContextAction.SHOW_LEFT_NAV: {
+            console.log("here", action.show);
+            return {
+                ...state,
+                showLeftNav: action.show
             }
         }
         case AppContextAction.CURRENT_USER: {

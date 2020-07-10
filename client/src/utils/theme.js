@@ -32,6 +32,7 @@ const theme = createMuiTheme({
     },
     primary: brown,
     secondary: teal,
+    leftNavBarWidth: 240,
 });
 
 export default theme;
