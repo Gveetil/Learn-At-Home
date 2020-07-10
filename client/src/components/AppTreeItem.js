@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import TreeItem from '@material-ui/lab/TreeItem';
 import Typography from '@material-ui/core/Typography';
+import { useHistory } from "react-router-dom";
 
 // Styles used by this component
 const useStyles = makeStyles((theme) => ({
@@ -60,22 +61,25 @@ AppTreeItem.propTypes = {
     color: PropTypes.string,
     labelIcon: PropTypes.elementType.isRequired,
     labelText: PropTypes.string.isRequired,
+    linkTo: PropTypes.string,
 };
 
 // The Tree View Item used by the Tree View Control
 export default function AppTreeItem(props) {
     const classes = useStyles();
-    const { labelText, labelIcon: LabelIcon, color, bgColor, ...other } = props;
+    let history = useHistory();
+    const { labelText, labelIcon: LabelIcon, color, bgColor, linkTo, ...other } = props;
 
     return (
         <TreeItem
+            onClick={() => (linkTo !== "") ? history.push(linkTo) : ""}
             label={
-                <div className={classes.labelRoot}>
+                < div className={classes.labelRoot} >
                     <LabelIcon color="inherit" className={classes.labelIcon} />
                     <Typography variant="body2" className={classes.labelText}>
                         {labelText}
                     </Typography>
-                </div>
+                </div >
             }
             style={{
                 '--tree-view-color': color,

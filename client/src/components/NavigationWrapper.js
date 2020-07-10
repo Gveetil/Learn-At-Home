@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         minHeight: '100vh',
         paddingBottom: '50px',
+        width: "100%",
         [theme.breakpoints.up('sm')]: {
             zIndex: theme.zIndex.drawer + 1,
             transition: theme.transitions.create(['width', 'margin'], {
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         minHeight: '100vh',
         paddingBottom: '50px',
+        width: "100%",
         [theme.breakpoints.up('sm')]: {
             marginLeft: theme.leftNavBarWidth,
             width: `calc(100% - ${theme.leftNavBarWidth}px)`,
@@ -33,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-// Application header / navigation toolbar
+// Wrapper used to enclose page contents when using the navigation panel
 export default function NavigationWrapper(props) {
     const [state, _] = useAppContext();
     const classes = useStyles();

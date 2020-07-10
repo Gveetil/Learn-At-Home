@@ -1,7 +1,11 @@
 import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import PostAddIcon from '@material-ui/icons/PostAdd';
+import DraftsIcon from '@material-ui/icons/Drafts';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+import AssignmentReturnedIcon from '@material-ui/icons/AssignmentReturned';
+import InboxIcon from '@material-ui/icons/Inbox';
 import AppTreeView from '../components/AppTreeView';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -10,30 +14,32 @@ import Footer from "../components/Footer";
 import NavigationPanel from "../components/NavigationPanel";
 import NavigationWrapper from "../components/NavigationWrapper";
 import { useAppContext } from "../context/AppContext";
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import NewAssignment from "../components/teacher/NewAssignment";
 
 const useStyles = makeStyles((theme) => ({
-    content: {
-        flexGrow: 1,
-        padding: theme.spacing(3),
-    },
+
 }));
 
 const treeViewOptions = [
-    { id: 'new', title: 'New Assignment', icon: AssignmentIcon },
+    { id: 'new', title: 'New Assignment', icon: AddCircleIcon, color: 'blue', link: '/add' },
     {
-        id: 'assignment', title: 'Assignments', icon: AssignmentIcon,
+        id: 'assignment', title: 'Assignments', icon: AssignmentIcon, link: '/assignment',
         options: [
-            { id: 'assignment_draft', title: 'Drafts', icon: AssignmentIcon, },
-            { id: 'assignment_posted', title: 'Posted', icon: AssignmentIcon, },
-            { id: 'assignment_completed', title: 'Completed', icon: AssignmentIcon, },
+            { id: 'assignment_draft', title: 'Drafts', icon: DraftsIcon, link: '/assignment?type=draft', },
+            { id: 'assignment_posted', title: 'Posted', icon: PostAddIcon, link: '/assignment?type=posted', },
+            { id: 'assignment_completed', title: 'Completed', icon: AssignmentTurnedInIcon, link: '/assignment?type=completed', },
         ]
     }, {
-        id: 'submission', title: 'Submissions', icon: AssignmentTurnedInIcon,
+        id: 'submission', title: 'Submissions', icon: AssignmentReturnedIcon, link: '/submission',
         options: [
-            { id: 'submission_inbox', title: 'Inbox', icon: AssignmentTurnedInIcon, },
-            { id: 'submission_inprogress', title: 'In Progress', icon: AssignmentTurnedInIcon, },
-            { id: 'submission_overdue', title: 'Overdue', icon: AssignmentTurnedInIcon, },
-            { id: 'submission_marked', title: 'Marked', icon: AssignmentTurnedInIcon, },
+            { id: 'submission_inbox', title: 'Inbox', icon: InboxIcon, link: '/submission?type=inbox', },
+            { id: 'submission_inprogress', title: 'In Progress', icon: AssignmentIndIcon, link: '/submission?type=inprogress', },
+            { id: 'submission_overdue', title: 'Overdue', icon: AssignmentLateIcon, link: '/submission?type=overdue', },
+            { id: 'submission_marked', title: 'Marked', icon: AssignmentTurnedInIcon, link: '/submission?type=marked', },
         ]
     }];
 
@@ -44,45 +50,34 @@ function TeacherDashboard(props) {
     /* eslint-disable no-unused-vars */
     const [state, _] = useAppContext();
     return (
-        <div >
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
             <Box display="flex">
                 <NavigationPanel>
                     <AppTreeView
+                        defaultExpanded={['assignment', 'submission']}
+                        defaultSelected='new'
                         items={treeViewOptions}
                     />
                 </NavigationPanel>
                 <NavigationWrapper>
                     <NavBar handleLogout={props.handleLogout} />
-                    <main className={classes.content}>
-                        <div className={classes.toolbar} />
-                        <Typography paragraph>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                            ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-                            facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-                            gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-                            donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-                            adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-                            Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-                            imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-                            arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-                            donec massa sapien faucibus et molestie ac.
-                    </Typography>
-                        <Typography paragraph>
-                            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-                            facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-                            tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-                            consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-                            vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
-                            hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
-                            tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
-                            nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
-                            accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-                     </Typography>
-                    </main>
+                    <Box m={2}>
+                        <Switch>
+                            <Route exact path="/add">
+                                <NewAssignment />
+                            </Route>
+                            <Route path="/assignment">
+                                <div>assignment</div>
+                            </Route>
+                            <Route path="/submission">
+                                <div>submission</div>
+                            </Route>
+                        </Switch>
+                    </Box>
                     <Footer />
                 </NavigationWrapper>
             </Box>
-        </div >
+        </BrowserRouter>
     );
 }
 

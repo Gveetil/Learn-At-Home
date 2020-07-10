@@ -1,7 +1,5 @@
 import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import AppTreeView from '../components/AppTreeView';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -10,6 +8,14 @@ import Footer from "../components/Footer";
 import NavigationPanel from "../components/NavigationPanel";
 import NavigationWrapper from "../components/NavigationWrapper";
 import { useAppContext } from "../context/AppContext";
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+import InboxIcon from '@material-ui/icons/Inbox';
+import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
+import DescriptionIcon from '@material-ui/icons/Description';
+import LibraryAddCheckIcon from '@material-ui/icons/LibraryAddCheck';
+import AssignmentReturnedIcon from '@material-ui/icons/AssignmentReturned';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -19,22 +25,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const treeViewOptions = [
+    { id: 'all', title: 'All', icon: InboxIcon, },
     {
-        id: 'all', title: 'All', icon: AssignmentIcon,
+        id: 'assignment', title: 'Assignments', icon: AssignmentIcon,
         options: [
-            {
-                id: 'assignment', title: 'Assignments', icon: AssignmentIcon,
-                options: [
-                    { id: 'assignment_active', title: 'Active', icon: AssignmentTurnedInIcon, },
-                    { id: 'assignment_completed', title: 'Completed', icon: AssignmentTurnedInIcon, },
-                ]
-            }, {
-                id: 'task', title: 'Learning Tasks', icon: AssignmentTurnedInIcon,
-                options: [
-                    { id: 'task_active', title: 'Active', icon: AssignmentTurnedInIcon, },
-                    { id: 'task_completed', title: 'Completed', icon: AssignmentTurnedInIcon, },
-                ]
-            }
+            { id: 'assignment_active', title: 'Active', icon: AssignmentReturnedIcon, },
+            { id: 'assignment_completed', title: 'Completed', icon: AssignmentTurnedInIcon, },
+        ]
+    }, {
+        id: 'task', title: 'Learning Tasks', icon: LibraryBooksIcon,
+        options: [
+            { id: 'task_active', title: 'Active', icon: DescriptionIcon, },
+            { id: 'task_completed', title: 'Completed', icon: LibraryAddCheckIcon, },
         ]
     }];
 
@@ -49,6 +51,8 @@ function StudentDashboard(props) {
             <Box display="flex">
                 <NavigationPanel>
                     <AppTreeView
+                        defaultExpanded={['assignment', 'task']}
+                        defaultSelected='all'
                         items={treeViewOptions}
                     />
                 </NavigationPanel>

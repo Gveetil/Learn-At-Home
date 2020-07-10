@@ -5,10 +5,13 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import AppTreeItem from "../components/AppTreeItem";
 
+import theme from '../utils/theme';
+
 // Styles used by this component
 const useStyles = makeStyles({
     root: {
         height: 264,
+        padding: theme.spacing(1),
         flexGrow: 1,
         width: 240,
     },
@@ -21,7 +24,9 @@ export default function AppTreeView(props) {
     return (
         <TreeView
             className={classes.root}
-            // defaultExpanded={['3']}
+            defaultExpanded={props.defaultExpanded}
+            defaultSelected={props.defaultSelected}
+            multiSelect={false}
             defaultCollapseIcon={<ArrowDropDownIcon />}
             defaultExpandIcon={<ArrowRightIcon />}
             defaultEndIcon={<div style={{ width: 24 }} />}
@@ -31,23 +36,26 @@ export default function AppTreeView(props) {
     );
 }
 
+// Renders items in the tree view recursively based on the array passed in
 function renderTreeItems(items) {
     return items.map((item, index) => {
         if (item.options) {
             return (<AppTreeItem
+                linkTo={item.link}
                 nodeId={item.id}
                 labelText={item.title}
-                color="#3c8039"
-                bgColor="#e6f4ea"
+                color={item.color || "#3c8039"}
+                bgColor={item.bgColor || "#e6f4ea"}
                 labelIcon={item.icon}>
                 {renderTreeItems(item.options)}
             </AppTreeItem>);
         } else {
             return (<AppTreeItem
+                linkTo={item.link}
                 nodeId={item.id}
                 labelText={item.title}
-                color="#3c8039"
-                bgColor="#e6f4ea"
+                color={item.color || "#3c8039"}
+                bgColor={item.bgColor || "#e6f4ea"}
                 labelIcon={item.icon}
             />);
         }
