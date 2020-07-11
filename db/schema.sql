@@ -9,7 +9,6 @@ DROP TABLE IF EXISTS `AssignmentLinks`;
 DROP TABLE IF EXISTS `Assignments`;
 DROP TABLE IF EXISTS `TeacherClassSubjects`;
 DROP TABLE IF EXISTS `Ratings`;
--- DROP TABLE IF EXISTS `Parents`;
 DROP TABLE IF EXISTS `Students`;
 DROP TABLE IF EXISTS `Class`;
 DROP TABLE IF EXISTS `GradeSubjects`;
@@ -67,23 +66,13 @@ CREATE TABLE IF NOT EXISTS `Class` (
     FOREIGN KEY (`TeacherId`) REFERENCES `Users` (`id`) 
         ON DELETE NO ACTION);
     
-CREATE TABLE IF NOT EXISTS `Students` (
-    `id` INTEGER NOT NULL auto_increment , 
-    `UserId` INTEGER, 
+CREATE TABLE IF NOT EXISTS `StudentClass` (
+    `StudentId` INTEGER, 
     `ClassId` INTEGER NOT NULL, 
-    PRIMARY KEY (`id`), 
-    FOREIGN KEY (`UserId`) REFERENCES `Users` (`id`) 
+    FOREIGN KEY (`StudentId`) REFERENCES `Users` (`id`) 
         ON DELETE NO ACTION, 
     FOREIGN KEY (`ClassId`) REFERENCES `Class` (`id`) 
         ON DELETE NO ACTION);
-
--- CREATE TABLE IF NOT EXISTS `Parents` (
---     `ParentId` INTEGER NOT NULL, 
---     `StudentId` INTEGER NOT NULL, 
---     FOREIGN KEY (`ParentId`) REFERENCES `Users` (`id`) 
---         ON DELETE NO ACTION, 
---     FOREIGN KEY (`StudentId`) REFERENCES `Students` (`id`) 
---         ON DELETE NO ACTION);
 
 CREATE TABLE IF NOT EXISTS `Ratings` (
     `id` INTEGER NOT NULL auto_increment , 
@@ -156,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `Submissions` (
         ON DELETE NO ACTION, 
     FOREIGN KEY (`AssignmentId`) REFERENCES `Assignments` (`id`) 
         ON DELETE NO ACTION, 
-    FOREIGN KEY (`StudentId`) REFERENCES `Students` (`id`) 
+    FOREIGN KEY (`StudentId`) REFERENCES `Users` (`id`) 
         ON DELETE NO ACTION);
 
 CREATE TABLE IF NOT EXISTS `SubmissionLinks` (
