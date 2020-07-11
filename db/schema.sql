@@ -95,12 +95,15 @@ CREATE TABLE IF NOT EXISTS `Assignments` (
     `title` VARCHAR(255) NOT NULL, 
     `instructions` TEXT, 
     `isLearningTask` BOOLEAN NOT NULL DEFAULT TRUE, 
-    `dueDate` DATETIME, 
-    `postedDate` DATETIME, 
+    `dueDate` DATE, 
+    `postedDate` DATE, 
     `createdAt` DATETIME DEFAULT CURRENT_TIMESTAMP, 
     `updatedAt` DATETIME DEFAULT CURRENT_TIMESTAMP, 
+    `TeacherId` INTEGER NOT NULL, 
     `SubjectId` INTEGER NOT NULL, 
     PRIMARY KEY (`id`), 
+    FOREIGN KEY (`TeacherId`) REFERENCES `Users` (`id`) 
+        ON DELETE NO ACTION, 
     FOREIGN KEY (`SubjectId`) REFERENCES `Subjects` (`id`) 
         ON DELETE NO ACTION);
 
@@ -133,8 +136,8 @@ CREATE TABLE IF NOT EXISTS `AssignmentClass` (
 CREATE TABLE IF NOT EXISTS `Submissions` (
     `id` INTEGER NOT NULL auto_increment , 
     `comment` TEXT, 
-    `submissionDate` DATETIME, 
-    `competedDate` DATETIME, 
+    `submissionDate` DATE, 
+    `competedDate` DATE, 
     `createdAt` DATETIME DEFAULT CURRENT_TIMESTAMP, 
     `updatedAt` DATETIME DEFAULT CURRENT_TIMESTAMP, 
     `RatingId` INTEGER, 
