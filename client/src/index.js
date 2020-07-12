@@ -4,6 +4,8 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { AppProvider } from "./context/AppContext";
 import theme from './utils/theme';
+import AppDialog from './components/AppDialog';
+import AppBackDrop from './components/AppBackDrop';
 import App from './App';
 
 ReactDOM.render(
@@ -12,6 +14,8 @@ ReactDOM.render(
       <CssBaseline />
       <AppProvider>
         <App />
+        <AppDialog />
+        <AppBackDrop />
       </AppProvider>
     </ThemeProvider>
   </React.StrictMode>,

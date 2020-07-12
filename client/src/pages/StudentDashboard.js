@@ -1,6 +1,6 @@
 import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import AppTreeView from '../components/AppTreeView';
+import { makeStyles } from '@material-ui/core/styles';
+import AppTreeView from '../components/controls/AppTreeView';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import NavBar from "../components/NavBar";
@@ -11,12 +11,12 @@ import { useAppContext } from "../context/AppContext";
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import InboxIcon from '@material-ui/icons/Inbox';
-import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import DescriptionIcon from '@material-ui/icons/Description';
 import LibraryAddCheckIcon from '@material-ui/icons/LibraryAddCheck';
 import AssignmentReturnedIcon from '@material-ui/icons/AssignmentReturned';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 
+// Styles used by this component
 const useStyles = makeStyles((theme) => ({
     content: {
         flexGrow: 1,
@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+// The tree view options available for a student
 const treeViewOptions = [
     { id: 'all', title: 'All', icon: InboxIcon, },
     {
@@ -43,7 +44,6 @@ const treeViewOptions = [
 // The student dashboard 
 function StudentDashboard(props) {
     const classes = useStyles();
-    const theme = useTheme();
     /* eslint-disable no-unused-vars */
     const [state, _] = useAppContext();
     return (

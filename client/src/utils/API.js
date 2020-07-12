@@ -19,6 +19,11 @@ export default {
   },
   // Teacher APIs
   teacher: {
-
+    getClassSubjects: function () {
+      return axios.get("/api/teacher/classsubjects");
+    },
+    createAssignment: function (data) {
+      return axios.post("/api/teacher/assignment", data);
+    },
   },
 };

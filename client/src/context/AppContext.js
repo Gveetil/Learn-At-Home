@@ -9,6 +9,7 @@ const AppContextAction = {
     LOADING: "LOADING",         // Sets the loading status
     CURRENT_USER: "CURRENT_USER",       // Sets the current user
     SHOW_LEFT_NAV: "SHOW_LEFT_NAV",     // Shows / hides the left navigation panel
+    HANDLE_ERROR: "HANDLE_ERROR",       // Handles application errors
 }
 
 // The currently available user access types in the system
@@ -41,6 +42,32 @@ const reducer = (state, action) => {
                 dialog: {
                     show: action.show,
                     message
+                }
+            }
+        }
+        case AppContextAction.HANDLE_ERROR: {
+            if (action.error && action.error.response
+                && action.error.response.status === 401) {
+                // Authentication Errors -- redirect to login
+                return {
+                    ...state,
+                    loading: false,
+                    user: {
+                        authenticated: false,
+                    },
+                    dialog: {
+                        show: true,
+                        message: action.error.message,
+                    }
+                }
+            }
+            //All other errors
+            return {
+                ...state,
+                loading: false,
+                dialog: {
+                    show: true,
+                    message: action.error.message,
                 }
             }
         }

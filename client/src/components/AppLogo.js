@@ -1,12 +1,9 @@
 import React from 'react';
-import { Typography, Box } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 // Styles used by this component
 const useStyles = makeStyles((theme) => ({
-    root: {
-
-    },
     textColor: {
         color: theme.logo.main,
     },

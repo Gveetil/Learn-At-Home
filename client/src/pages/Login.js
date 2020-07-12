@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
-import path from 'path';
 import { Container, Grid, Paper, TextField, Box } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import { RoundedButton } from '../components/styles';
 import AppLogo from '../components/AppLogo';
 
-// Path to images folder
-const IMAGE_FOLDER_PATH = path.join(process.env.PUBLIC_URL, "/images/");
-
 // Styles used by this component
 const useStyles = makeStyles((theme) => ({
     root: {
-        backgroundImage: `url(${IMAGE_FOLDER_PATH}background.jpg)`,
+        backgroundImage: `url(${theme.IMAGE_FOLDER_PATH}background.jpg)`,
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",

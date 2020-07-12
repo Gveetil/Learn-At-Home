@@ -1,6 +1,5 @@
-import React, { Children } from 'react';
-import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import Hidden from '@material-ui/core/Hidden';
@@ -30,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
 function LeftNavPanel(props) {
     const [state, dispatch] = useAppContext();
     const classes = useStyles();
-    const theme = useTheme();
 
     const handleLeftNavToggle = () => {
         dispatch({ type: AppContextAction.SHOW_LEFT_NAV, show: !state.showLeftNav });
@@ -38,7 +36,6 @@ function LeftNavPanel(props) {
 
     return (
         <div className={classes.drawer} aria-label="mailbox folders">
-            {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
             <Hidden smUp>
                 <Drawer
                     variant="temporary"

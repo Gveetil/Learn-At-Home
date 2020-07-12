@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 // Wrapper used to enclose page contents when using the navigation panel
 export default function NavigationWrapper(props) {
+    /* eslint-disable no-unused-vars */
     const [state, _] = useAppContext();
     const classes = useStyles();
 

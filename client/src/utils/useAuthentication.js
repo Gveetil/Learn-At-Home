@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react'
+import { useEffect } from 'react'
 import { UserAccessType, AppContextAction, useAppContext } from "../context/AppContext";
 import API from './API';
 
@@ -6,20 +6,19 @@ import API from './API';
 function useAuthentication() {
     const [state, dispatch] = useAppContext();
 
-    // Get current user from session when the page is first loaded
-    useLayoutEffect(() => {
+    // Get current user from session when the app is first loaded
+    useEffect(() => {
         async function getCurrentUser() {
             try {
                 dispatch({ type: AppContextAction.LOADING, show: true });
                 const results = await API.user.getCurrentUser();
-                console.log(results.data);
                 if (results && results.data && results.status === 200) {
                     dispatch({ type: AppContextAction.CURRENT_USER, user: results.data });
                 }
                 dispatch({ type: AppContextAction.LOADING, show: false });
             } catch (error) {
-                // If error while retrieving current user, log and carry on 
-                console.log(error);
+                // No active user session found - carry on to login   
+                dispatch({ type: AppContextAction.LOADING, show: false });
             }
         }
 
@@ -33,16 +32,17 @@ function useAuthentication() {
             dispatch({ type: AppContextAction.LOADING, show: true });
             const results = await API.user.login({ userName, password });
             if (results && results.data && results.status === 200) {
+                // Login Success
                 dispatch({ type: AppContextAction.CURRENT_USER, user: results.data });
-            } else {
                 dispatch({ type: AppContextAction.LOADING, show: false });
-                return false;
+                return true;
             }
+
             dispatch({ type: AppContextAction.LOADING, show: false });
-            return true;
+            return false;
+
         } catch (error) {
-            console.log(error);
-            dispatch({ type: AppContextAction.SHOW_DIALOG, show: true, message: error.message });
+            dispatch({ type: AppContextAction.LOADING, show: false });
             return false;
         }
     }
@@ -58,7 +58,7 @@ function useAuthentication() {
             dispatch({ type: AppContextAction.LOADING, show: false });
         } catch (error) {
             console.log(error);
-            dispatch({ type: AppContextAction.SHOW_DIALOG, show: true, message: error.message });
+            dispatch({ type: AppContextAction.HANDLE_ERROR, error });
         }
     }
 

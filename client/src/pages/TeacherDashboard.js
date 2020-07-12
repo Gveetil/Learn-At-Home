@@ -1,13 +1,11 @@
 import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import AssignmentReturnedIcon from '@material-ui/icons/AssignmentReturned';
 import InboxIcon from '@material-ui/icons/Inbox';
-import AppTreeView from '../components/AppTreeView';
-import Typography from '@material-ui/core/Typography';
+import AppTreeView from '../components/controls/AppTreeView';
 import Box from '@material-ui/core/Box';
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
@@ -19,13 +17,11 @@ import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import NewAssignment from "../components/teacher/NewAssignment";
+import { TeacherProvider } from "../context/TeacherContext";
 
-const useStyles = makeStyles((theme) => ({
-
-}));
-
+// The tree view options available for a teacher
 const treeViewOptions = [
-    { id: 'new', title: 'New Assignment', icon: AddCircleIcon, color: 'blue', link: '/add' },
+    { id: 'new', title: 'New Assignment', icon: AddCircleIcon, link: '/add' },
     {
         id: 'assignment', title: 'Assignments', icon: AssignmentIcon, link: '/assignment',
         options: [
@@ -43,40 +39,40 @@ const treeViewOptions = [
         ]
     }];
 
-// The teacher home page 
+// The teacher dashboard 
 function TeacherDashboard(props) {
-    const classes = useStyles();
-    const theme = useTheme();
     /* eslint-disable no-unused-vars */
     const [state, _] = useAppContext();
     return (
         <BrowserRouter basename={process.env.PUBLIC_URL}>
-            <Box display="flex">
-                <NavigationPanel>
-                    <AppTreeView
-                        defaultExpanded={['assignment', 'submission']}
-                        defaultSelected='new'
-                        items={treeViewOptions}
-                    />
-                </NavigationPanel>
-                <NavigationWrapper>
-                    <NavBar handleLogout={props.handleLogout} />
-                    <Box m={2}>
-                        <Switch>
-                            <Route exact path="/add">
-                                <NewAssignment />
-                            </Route>
-                            <Route path="/assignment">
-                                <div>assignment</div>
-                            </Route>
-                            <Route path="/submission">
-                                <div>submission</div>
-                            </Route>
-                        </Switch>
-                    </Box>
-                    <Footer />
-                </NavigationWrapper>
-            </Box>
+            <TeacherProvider>
+                <Box display="flex">
+                    <NavigationPanel>
+                        <AppTreeView
+                            defaultExpanded={['assignment', 'submission']}
+                            defaultSelected='new'
+                            items={treeViewOptions}
+                        />
+                    </NavigationPanel>
+                    <NavigationWrapper>
+                        <NavBar handleLogout={props.handleLogout} />
+                        <Box m={2} mb={4}>
+                            <Switch>
+                                <Route exact path="/add">
+                                    <NewAssignment />
+                                </Route>
+                                <Route path="/assignment">
+                                    <div>assignment</div>
+                                </Route>
+                                <Route path="/submission">
+                                    <div>submission</div>
+                                </Route>
+                            </Switch>
+                        </Box>
+                        <Footer />
+                    </NavigationWrapper>
+                </Box>
+            </TeacherProvider>
         </BrowserRouter>
     );
 }

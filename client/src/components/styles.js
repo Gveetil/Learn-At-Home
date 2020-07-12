@@ -9,9 +9,6 @@ export const NavButton = withStyles({
     root: {
         color: theme.palette.header.text,
         marginRight: theme.spacing(1),
-        '&$selected': {
-            color: theme.palette.header.activeText,
-        },
         '&:hover': {
             color: theme.palette.header.hoverText,
         },
@@ -19,7 +16,6 @@ export const NavButton = withStyles({
             color: theme.palette.header.hoverText,
         }
     },
-    selected: {},
     label: {
         textTransform: 'none',
     },
@@ -32,6 +28,7 @@ export const RoundedButton = withStyles({
         '&:hover': {
             backgroundColor: theme.secondary[700],
         },
+        margin: theme.spacing(0.5),
         paddingLeft: theme.spacing(3),
         paddingRight: theme.spacing(3),
         borderRadius: "16px",

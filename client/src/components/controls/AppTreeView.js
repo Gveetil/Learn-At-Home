@@ -13,7 +13,7 @@ const useStyles = makeStyles({
         height: 264,
         padding: theme.spacing(1),
         flexGrow: 1,
-        width: 240,
+        width: theme.leftNavBarWidth,
     },
 });
 
@@ -45,8 +45,6 @@ function renderTreeItems(items) {
                 linkTo={item.link}
                 nodeId={item.id}
                 labelText={item.title}
-                color={item.color || "#3c8039"}
-                bgColor={item.bgColor || "#e6f4ea"}
                 labelIcon={item.icon}>
                 {renderTreeItems(item.options)}
             </AppTreeItem>);
@@ -56,8 +54,6 @@ function renderTreeItems(items) {
                 linkTo={item.link}
                 nodeId={item.id}
                 labelText={item.title}
-                color={item.color || "#3c8039"}
-                bgColor={item.bgColor || "#e6f4ea"}
                 labelIcon={item.icon}
             />);
         }

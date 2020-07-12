@@ -21,14 +21,6 @@ const useStyles = makeStyles((theme) => ({
             duration: theme.transitions.duration.leavingScreen,
         }),
     },
-    appBarShift: {
-        marginLeft: theme.leftNavBarWidth,
-        width: `calc(100% - ${theme.leftNavBarWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
     menuButton: {
         marginRight: theme.spacing(2),
     },
@@ -53,9 +45,6 @@ export default function NavBar(props) {
 
     return (
         <AppBar position="static"
-            className={clsx(classes.appBar, {
-                [classes.appBarShift]: state.showLeftNav,
-            })}
             className={classes.appBar}
         >
             <Toolbar>
