@@ -9,6 +9,10 @@ router
     .post(assignmentController.create);
 
 router
+    .route("/assignments/:type")
+    .get(assignmentController.fetchAll);
+
+router
     .route("/classsubjects")
     .get(teacherController.getTeacherClassSubjects);
 

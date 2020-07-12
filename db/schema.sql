@@ -164,3 +164,17 @@ CREATE TABLE IF NOT EXISTS `SubmissionLinks` (
     FOREIGN KEY (`SubmissionId`) REFERENCES `Submissions` (`id`) 
         ON DELETE NO ACTION); 
 
+CREATE OR REPLACE VIEW `AssignmentSubmissions` (
+`AssignmentId` , `StudentsSubmitted`, `StudentsPending`)
+    AS
+    (SELECT 
+		AC.AssignmentId, 
+		count(S.StudentId) `StudentsSubmitted`, 
+		count(SC.StudentId) `StudentsPending` 
+	FROM AssignmentClass AC
+	INNER JOIN StudentClass SC
+		ON AC.ClassId = SC.ClassId
+	LEFT JOIN Submissions S
+		ON AC.AssignmentId = S.AssignmentId
+		AND SC.StudentId = S.StudentId 
+	GROUP BY AC.AssignmentId)

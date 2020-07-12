@@ -35,6 +35,9 @@ module.exports = function (sequelize, DataTypes) {
     Assignment.hasMany(models.AssignmentClass, {
       onDelete: "cascade"
     });
+
+    // Associating Assignment with AssignmentSubmissions view
+    Assignment.hasMany(models.AssignmentSubmissions);
   };
 
   return Assignment;

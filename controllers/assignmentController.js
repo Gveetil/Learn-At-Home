@@ -27,6 +27,24 @@ module.exports = {
             return response.status(500).send(error.message);
         }
     },
+    // Fetch all assignments filtered by the request type
+    fetchAll: async function (request, response) {
+        try {
+            const { type: assignmentType } = request.params;
+            const filter = getAssignmentFilter(assignmentType);
+            const result = await db.Assignment.findAll({
+                where: filter,
+                order: [["updatedAt", "DESC"]],
+                include: [
+                    db.AssignmentClass, db.AssignmentLink, db.AssignmentSubmissions
+                ]
+            });
+            return response.json(result);
+        } catch (error) {
+            console.log(error);
+            return response.status(500).send(error.message);
+        }
+    }
 };
 
 // Fetch list of assignment links based on data sent in
@@ -38,4 +56,31 @@ function getAssignmentLinks(links) {
         dropboxFileId: item.dropboxFileId,
         isUploaded: (item.dropboxFileId !== null),
     }));
+}
+
+// Returns the filter to fetch assignments based on the type sent in
+function getAssignmentFilter(assignmentType) {
+
+    switch (assignmentType) {
+        case "draft": {
+            return {
+                postedDate: { [db.Sequelize.Op.eq]: null },
+            };
+        }
+        case "pending": {
+            return {
+                postedDate: { [db.Sequelize.Op.ne]: null },
+                "$AssignmentSubmissions.StudentsPending$": { [db.Sequelize.Op.ne]: 0 },
+            };
+        }
+        case "completed": {
+            return {
+                "$AssignmentSubmissions.StudentsPending$": { [db.Sequelize.Op.eq]: 0 },
+            };
+        }
+        default: {
+            // Get all assignments
+            return {};
+        }
+    }
 }
