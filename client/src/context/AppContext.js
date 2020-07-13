@@ -85,6 +85,9 @@ const reducer = (state, action) => {
             }
         }
         case AppContextAction.CURRENT_USER: {
+            const currentUserId = (!action.user) ? "" : action.user.id;
+            // Save user id locally to validate user is same across browser instances
+            localStorage.setItem('LEARN_AT_HOME_ACTIVE_CLIENT', currentUserId);
             return {
                 ...state,
                 user: {

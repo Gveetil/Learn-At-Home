@@ -1,9 +1,10 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { UserAccessType, AppContextAction, useAppContext } from "../context/AppContext";
 import API from './API';
 
 // This custom hook helps perform user authentication
 function useAuthentication() {
+    const [initialized, setInitialized] = useState(false);
     const [state, dispatch] = useAppContext();
 
     // Get current user from session when the app is first loaded
@@ -20,9 +21,21 @@ function useAuthentication() {
                 // No active user session found - carry on to login   
                 dispatch({ type: AppContextAction.LOADING, show: false });
             }
+            setInitialized(true);
         }
 
+        // If current user is reset, reset user object so all browser instances are logged out
+        window.addEventListener('storage', e => {
+            if (e.key.trim() === 'LEARN_AT_HOME_ACTIVE_CLIENT') {
+                if (e.oldValue && !e.newValue) {
+                    // Sign out from all instances 
+                    dispatch({ type: AppContextAction.CURRENT_USER, user: null });
+                }
+            }
+        });
+
         getCurrentUser();
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -30,6 +43,8 @@ function useAuthentication() {
     async function handleLogin(userName, password) {
         try {
             dispatch({ type: AppContextAction.LOADING, show: true });
+            // Clear current user
+            localStorage.setItem('LEARN_AT_HOME_ACTIVE_CLIENT', "");
             const results = await API.user.login({ userName, password });
             if (results && results.data && results.status === 200) {
                 // Login Success
@@ -65,6 +80,7 @@ function useAuthentication() {
     return {
         user: state.user,
         UserAccessType,
+        initialized,
         handleLogout,
         handleLogin,
     };
