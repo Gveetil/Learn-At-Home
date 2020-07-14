@@ -6,11 +6,16 @@ const assignmentController = require("../../controllers/assignmentController");
 
 router
     .route("/assignment")
-    .post(assignmentController.create);
+    .post(assignmentController.create)
+    .put(assignmentController.update);
 
 router
     .route("/assignments/:type")
     .get(assignmentController.fetchAll);
+
+router
+    .route("/assignment/:id")
+    .delete(assignmentController.delete);
 
 router
     .route("/classsubjects")

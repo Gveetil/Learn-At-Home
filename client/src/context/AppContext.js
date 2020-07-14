@@ -10,6 +10,7 @@ const AppContextAction = {
     CURRENT_USER: "CURRENT_USER",       // Sets the current user
     SHOW_LEFT_NAV: "SHOW_LEFT_NAV",     // Shows / hides the left navigation panel
     HANDLE_ERROR: "HANDLE_ERROR",       // Handles application errors
+    SHOW_TOAST: "SHOW_TOAST", // Sets the message to be displayed in the toast
 }
 
 // The currently available user access types in the system
@@ -18,11 +19,24 @@ const UserAccessType = {
     Student: 2
 };
 
+// The currently available toast types in the system
+const ToastType = {
+    Information: "info",
+    Error: "error",
+    Warning: "warning",
+    Success: "success"
+};
+
 // Default state of the context
 const defaultState = {
     dialog: {
         show: false,
         message: "",
+    },
+    toast: {
+        show: false,
+        message: "",
+        type: "",
     },
     loading: false,
     showLeftNav: true,
@@ -42,6 +56,18 @@ const reducer = (state, action) => {
                 dialog: {
                     show: action.show,
                     message
+                }
+            }
+        }
+        case AppContextAction.SHOW_TOAST: {
+            const message = action.show ? action.message : "";
+            const toastType = action.show ? action.toastType : "";
+            return {
+                ...state,
+                toast: {
+                    show: action.show,
+                    message,
+                    type: toastType
                 }
             }
         }
@@ -112,4 +138,4 @@ const useAppContext = () => {
     return useContext(AppContext);
 };
 
-export { AppProvider, useAppContext, AppContextAction, UserAccessType };
+export { AppProvider, useAppContext, AppContextAction, UserAccessType, ToastType };

@@ -6,6 +6,7 @@ import { AppProvider } from "./context/AppContext";
 import theme from './utils/theme';
 import AppDialog from './components/AppDialog';
 import AppBackDrop from './components/AppBackDrop';
+import MessageToast from './components/MessageToast';
 import App from './App';
 
 ReactDOM.render(
@@ -16,6 +17,7 @@ ReactDOM.render(
         <App />
         <AppDialog />
         <AppBackDrop />
+        <MessageToast />
       </AppProvider>
     </ThemeProvider>
   </React.StrictMode>,

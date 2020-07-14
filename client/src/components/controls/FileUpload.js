@@ -23,7 +23,7 @@ export default function FileUpload(props) {
 
     return (
         <DropzoneArea
-            key={props.key}
+            key={props.fileUploadReset}
             dropzoneClass={classes.dropzone}
             dropzoneParagraphClass={classes.text}
             acceptedFiles={["image/*", ".doc", ".docx", ".pdf"]}

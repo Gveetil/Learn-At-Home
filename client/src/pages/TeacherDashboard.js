@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import DraftsIcon from '@material-ui/icons/Drafts';
@@ -11,13 +11,15 @@ import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import NavigationPanel from "../components/NavigationPanel";
 import NavigationWrapper from "../components/NavigationWrapper";
-import { useAppContext } from "../context/AppContext";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import NewAssignment from "../components/teacher/NewAssignment";
-import { TeacherProvider } from "../context/TeacherContext";
+import AssignmentList from "../components/teacher/AssignmentList";
+import API from '../utils/API';
+import { AppContextAction, useAppContext } from "../context/AppContext";
+import { TeacherContextAction, useTeacherContext } from '../context/TeacherContext';
 
 // The tree view options available for a teacher
 const treeViewOptions = [
@@ -43,36 +45,65 @@ const treeViewOptions = [
 function TeacherDashboard(props) {
     /* eslint-disable no-unused-vars */
     const [state, _] = useAppContext();
+    const [appState, appDispatch] = useAppContext();
+    const [teacherState, teacherDispatch] = useTeacherContext();
+    const [initialized, setInitialized] = useState(false);
+
+    // Load subjects and classes taught by this user when the page is first loaded
+    useEffect(() => {
+        async function initializeClassSubjects() {
+            try {
+                console.log("Loading teacher data ...")
+                // Load teacher master data
+                appDispatch({ type: AppContextAction.LOADING, show: true });
+                const results = await API.teacher.getClassSubjects();
+                if (results && results.data && results.status === 200) {
+                    teacherDispatch({ type: TeacherContextAction.SET_CLASS_SUBJECTS, classSubjects: results.data });
+                }
+                appDispatch({ type: AppContextAction.LOADING, show: false });
+                console.log("Loading teacher data - completed...")
+                setInitialized(true);
+            } catch (error) {
+                appDispatch({ type: AppContextAction.HANDLE_ERROR, error });
+            }
+        }
+
+        initializeClassSubjects();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    if (!initialized) {
+        return (<div>Loading ...</div>);
+    }
+
     return (
         <BrowserRouter basename={process.env.PUBLIC_URL}>
-            <TeacherProvider>
-                <Box display="flex">
-                    <NavigationPanel>
-                        <AppTreeView
-                            defaultExpanded={['assignment', 'submission']}
-                            defaultSelected='new'
-                            items={treeViewOptions}
-                        />
-                    </NavigationPanel>
-                    <NavigationWrapper>
-                        <NavBar handleLogout={props.handleLogout} />
-                        <Box m={2} mb={4}>
-                            <Switch>
-                                <Route exact path="/add">
-                                    <NewAssignment />
-                                </Route>
-                                <Route path="/assignment">
-                                    <div>assignment</div>
-                                </Route>
-                                <Route path="/submission">
-                                    <div>submission</div>
-                                </Route>
-                            </Switch>
-                        </Box>
-                        <Footer />
-                    </NavigationWrapper>
-                </Box>
-            </TeacherProvider>
+            <Box display="flex">
+                <NavigationPanel>
+                    <AppTreeView
+                        defaultExpanded={['assignment', 'submission']}
+                        defaultSelected='new'
+                        items={treeViewOptions}
+                    />
+                </NavigationPanel>
+                <NavigationWrapper>
+                    <NavBar handleLogout={props.handleLogout} />
+                    <Box m={2} mb={4}>
+                        <Switch>
+                            <Route exact path="/add">
+                                <NewAssignment />
+                            </Route>
+                            <Route path="/assignment">
+                                <AssignmentList />
+                            </Route>
+                            <Route path="/submission">
+                                <div>submission</div>
+                            </Route>
+                        </Switch>
+                    </Box>
+                    <Footer />
+                </NavigationWrapper>
+            </Box>
         </BrowserRouter>
     );
 }

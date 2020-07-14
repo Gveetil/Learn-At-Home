@@ -5,7 +5,6 @@ module.exports = {
     // Create a new assignment
     create: async function (request, response) {
         try {
-            console.log(request.user.id);
             const { title, instructions, isLearningTask,
                 dueDate, postedDate, SubjectId, classes, links } = request.body;
             const newAssignment = {
@@ -27,11 +26,27 @@ module.exports = {
             return response.status(500).send(error.message);
         }
     },
+    // Update assignment
+    update: async function (request, response) {
+        try {
+            const result = await db.Assignment.update(request.body, {
+                where: {
+                    id: request.body.id,
+                },
+            });
+            response.json(result);
+        } catch (error) {
+            console.log(error);
+            return response.status(500).send(error.message);
+        }
+    },
     // Fetch all assignments filtered by the request type
     fetchAll: async function (request, response) {
         try {
             const { type: assignmentType } = request.params;
             const filter = getAssignmentFilter(assignmentType);
+            // Add filter for current user
+            filter.TeacherId = { [db.Sequelize.Op.eq]: request.user.id };
             const result = await db.Assignment.findAll({
                 where: filter,
                 order: [["updatedAt", "DESC"]],
@@ -40,6 +55,24 @@ module.exports = {
                 ]
             });
             return response.json(result);
+        } catch (error) {
+            console.log(error);
+            return response.status(500).send(error.message);
+        }
+    },
+    delete: async function (request, response) {
+        try {
+            const { id: assignmentId } = request.params;
+
+            const result = await db.Assignment.destroy({
+                where: {
+                    id: assignmentId,
+                },
+                include: [
+                    db.AssignmentClass, db.AssignmentLink
+                ]
+            });
+            response.json(result);
         } catch (error) {
             console.log(error);
             return response.status(500).send(error.message);
@@ -67,14 +100,14 @@ function getAssignmentFilter(assignmentType) {
                 postedDate: { [db.Sequelize.Op.eq]: null },
             };
         }
-        case "pending": {
+        case "posted": {
             return {
                 postedDate: { [db.Sequelize.Op.ne]: null },
-                "$AssignmentSubmissions.StudentsPending$": { [db.Sequelize.Op.ne]: 0 },
             };
         }
         case "completed": {
             return {
+                isLearningTask: { [db.Sequelize.Op.eq]: false },
                 "$AssignmentSubmissions.StudentsPending$": { [db.Sequelize.Op.eq]: 0 },
             };
         }

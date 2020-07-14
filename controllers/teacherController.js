@@ -18,7 +18,6 @@ module.exports = {
         replacements: [request.user.id],
         type: db.sequelize.QueryTypes.SELECT
       });
-
       return response.json(result);
 
     } catch (error) {

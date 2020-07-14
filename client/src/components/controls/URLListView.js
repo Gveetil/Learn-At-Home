@@ -8,7 +8,7 @@ import { TextField, Box, Grid, Link, InputAdornment, IconButton } from '@materia
 const useStyles = makeStyles((theme) => ({
     iconButton: {
         padding: theme.spacing(0.5),
-        color: "#ef5350",
+        color: theme.palette.delete.main,
     }
 }));
 

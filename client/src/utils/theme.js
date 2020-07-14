@@ -17,7 +17,7 @@ const theme = createMuiTheme({
 
         },
         secondary: {
-            main: teal[400],
+            main: teal[500],
             contrastText: white,
         },
         footer: {
@@ -28,11 +28,22 @@ const theme = createMuiTheme({
             text: blueGrey[700],
             hoverText: 'blue',
         },
+        assignment: {
+            main: "#c8e6c9",
+            contrastText: blueGrey[700],
+        },
+        learningTask: {
+            main: "#d7ccc8",
+            contrastText: blueGrey[700],
+        },
         navigation: {
             text: blueGrey[700],
             selected: 'blue',
             background: blueGrey[50],
             hover: grey[100],
+        },
+        delete: {
+            main: "#ef5350",
         },
     },
     logo: {
@@ -68,6 +79,19 @@ const theme = createMuiTheme({
                 backgroundColor: "light-gray",
                 color: "blue",
             },
+        },
+    },
+    typography: {
+        subtitle1: {
+            color: blueGrey[700],
+            fontWeight: 'bold',
+        },
+        subtitle2: {
+            color: blueGrey[700],
+            fontWeight: '600',
+            paddingTop: '0.2rem',
+            paddingBottom: '0.2rem',
+            paddingRight: '0.2rem',
         },
     },
     IMAGE_FOLDER_PATH

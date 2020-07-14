@@ -95,8 +95,8 @@ CREATE TABLE IF NOT EXISTS `Assignments` (
     `title` VARCHAR(255) NOT NULL, 
     `instructions` TEXT, 
     `isLearningTask` BOOLEAN NOT NULL DEFAULT TRUE, 
-    `dueDate` DATE, 
-    `postedDate` DATE, 
+    `dueDate` DATETIME, 
+    `postedDate` DATETIME, 
     `createdAt` DATETIME DEFAULT CURRENT_TIMESTAMP, 
     `updatedAt` DATETIME DEFAULT CURRENT_TIMESTAMP, 
     `TeacherId` INTEGER NOT NULL, 
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `AssignmentLinks` (
     `AssignmentId` INTEGER NOT NULL, 
     PRIMARY KEY (`id`), 
     FOREIGN KEY (`AssignmentId`) REFERENCES `Assignments` (`id`) 
-        ON DELETE NO ACTION);
+        ON DELETE CASCADE);
 
 CREATE TABLE IF NOT EXISTS `AssignmentClass` (
     `id` INTEGER NOT NULL auto_increment , 
@@ -129,15 +129,15 @@ CREATE TABLE IF NOT EXISTS `AssignmentClass` (
     `ClassId` INTEGER NOT NULL, 
     PRIMARY KEY (`id`), 
     FOREIGN KEY (`AssignmentId`) REFERENCES `Assignments` (`id`) 
-        ON DELETE NO ACTION, 
+        ON DELETE CASCADE, 
     FOREIGN KEY (`ClassId`) REFERENCES `Class` (`id`) 
         ON DELETE NO ACTION);
 
 CREATE TABLE IF NOT EXISTS `Submissions` (
     `id` INTEGER NOT NULL auto_increment , 
     `comment` TEXT, 
-    `submissionDate` DATE, 
-    `competedDate` DATE, 
+    `submissionDate` DATETIME, 
+    `competedDate` DATETIME, 
     `createdAt` DATETIME DEFAULT CURRENT_TIMESTAMP, 
     `updatedAt` DATETIME DEFAULT CURRENT_TIMESTAMP, 
     `RatingId` INTEGER, 
@@ -172,7 +172,7 @@ CREATE OR REPLACE VIEW `AssignmentSubmissions` (
 		count(S.StudentId) `StudentsSubmitted`, 
 		count(SC.StudentId) `StudentsPending` 
 	FROM AssignmentClass AC
-	INNER JOIN StudentClass SC
+	LEFT JOIN StudentClass SC
 		ON AC.ClassId = SC.ClassId
 	LEFT JOIN Submissions S
 		ON AC.AssignmentId = S.AssignmentId

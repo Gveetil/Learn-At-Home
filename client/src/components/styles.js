@@ -1,6 +1,7 @@
 import { withStyles } from "@material-ui/core/styles";
 import theme from '../utils/theme';
 import Button from "@material-ui/core/Button";
+import { Typography } from "@material-ui/core";
 
 // Styled components for re-use within the applicaiton
 
@@ -37,4 +38,16 @@ export const RoundedButton = withStyles({
         fontWeight: "300",
     }
 })(Button);
+
+
+export const PageHeading = withStyles({
+    root: {
+        color: theme.palette.primary[700],
+        margin: theme.spacing(1),
+        fontSize: '1.3rem',
+        width: '100%',
+        textAlign: 'left',
+        fontFamily: "Roboto,Arial,Helvetica,sans-serif",
+    },
+})(Typography);
 

@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { FormControlLabel, Grid, Paper, TextField, Box, Typography, Container, Switch, Divider } from '@material-ui/core';
+import React, { useState } from 'react';
+import { FormControlLabel, Grid, Paper, TextField, Box, Container, Switch, Divider } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { RoundedButton } from '../styles';
 import API from '../../utils/API';
-import { AppContextAction, useAppContext } from "../../context/AppContext";
-import { TeacherContextAction, useTeacherContext } from '../../context/TeacherContext';
+import { ToastType, AppContextAction, useAppContext } from "../../context/AppContext";
+import { useTeacherContext } from '../../context/TeacherContext';
 import MultiSelectClass from "./MultiSelectClass";
 import FileUpload from "../controls/FileUpload";
 import DatePicker from "../controls/DatePicker";
 import URLListView from "../controls/URLListView";
 import DropboxHelper from "../../utils/DropboxHelper";
 import AppSelect from '../controls/AppSelect';
-import { validate } from '@material-ui/pickers';
+import { PageHeading } from "../styles"
 
 // Default state of form fields
 const defaultState = {
@@ -30,13 +30,15 @@ const defaultState = {
 // Create New Assignment Page
 function NewAssignment(props) {
     /* eslint-disable no-unused-vars */
-    const [_, appDispatch] = useAppContext();
-    const [teacherState, teacherDispatch] = useTeacherContext();
+    const [appState, appDispatch] = useAppContext();
+    const [teacherState, _] = useTeacherContext();
+    // Selecting the first subject as default
+    defaultState.SubjectId = teacherState.classSubjects[0].SubjectId;
     const [formFields, setFormFields] = useState(defaultState);
+
 
     // Update local state on change of form values
     const handleValueChange = (name, value) => {
-        console.log(value);
         setFormFields({ ...formFields, [name]: value });
     };
 
@@ -67,7 +69,7 @@ function NewAssignment(props) {
     // Validate Form Fields and post new assignment with today's date
     function handlePost(event) {
         event.preventDefault();
-        saveFormData(new Date());
+        saveFormData(Date.now());
     }
 
     // Validate Form Fields and save new assignment
@@ -87,6 +89,8 @@ function NewAssignment(props) {
             error = "Please select a class for this assignment!"
         } else if (formFields.SubjectId === "") {
             error = "Please select a Subject for this assignment!"
+        } else if (!formFields.dueDate && !formFields.isLearningTask) {
+            error = "Please select a Due Date for this assignment!"
         }
         if (error !== "") {
             setFormFields({
@@ -117,36 +121,19 @@ function NewAssignment(props) {
                 //reset fields
                 setFormFields(defaultState);
                 appDispatch({ type: AppContextAction.LOADING, show: false });
+                let toastMessage = "Assignment saved successfully!";
+                if (postedDate)
+                    toastMessage = "Assignment posted successfully!";
+                appDispatch({
+                    type: AppContextAction.SHOW_TOAST,
+                    show: true, message: toastMessage,
+                    toastType: ToastType.Success
+                });
             }
         } catch (error) {
             appDispatch({ type: AppContextAction.HANDLE_ERROR, error });
         }
     }
-
-    // Load subjects and classes taught by this user when the page is first loaded
-    useEffect(() => {
-        async function initializeClassSubjects() {
-            try {
-                // Load master data for the first time only
-                if (teacherState.classSubjects.length <= 0) {
-                    appDispatch({ type: AppContextAction.LOADING, show: true });
-                    const results = await API.teacher.getClassSubjects();
-                    if (results && results.data && results.status === 200) {
-                        teacherDispatch({ type: TeacherContextAction.SET_CLASS_SUBJECTS, classSubjects: results.data });
-                    }
-                    // Selecting the first subject as default
-                    defaultState.SubjectId = results.data[0].SubjectId;
-                    setFormFields({ ...formFields, SubjectId: results.data[0].SubjectId });
-                    appDispatch({ type: AppContextAction.LOADING, show: false });
-                }
-            } catch (error) {
-                appDispatch({ type: AppContextAction.HANDLE_ERROR, error });
-            }
-        }
-
-        initializeClassSubjects();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
         <Container maxWidth="lg">
@@ -155,7 +142,9 @@ function NewAssignment(props) {
                     <Box display="flex" flexGrow={1} p={2}>
                         <Grid container spacing={3} direction="row" justify="flex-start" >
                             <Grid item xs={12} >
-                                <Typography variant="h6" gutterBottom={true}>Add New Assignment</Typography>
+                                <PageHeading >
+                                    Add New Assignment
+                                </PageHeading>
                                 <Divider />
                             </Grid>
                             <Grid container item xs={12} spacing={3} sm={8}>
@@ -195,7 +184,7 @@ function NewAssignment(props) {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <FileUpload
-                                        key={formFields.fileUploadReset}
+                                        fileUploadReset={formFields.fileUploadReset}
                                         name="files"
                                         value={formFields.files}
                                         maxSize={DropboxHelper.UPLOAD_FILE_SIZE_LIMIT}
