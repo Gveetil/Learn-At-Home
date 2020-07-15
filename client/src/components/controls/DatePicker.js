@@ -15,7 +15,7 @@ export default function DatePicker(props) {
                 autoOk={true}
                 variant="inline"
                 format="MM/dd/yyyy"
-                margin="normal"
+                margin="dense"
                 name={props.name}
                 label={props.label}
                 value={props.disabled ? null : props.value}

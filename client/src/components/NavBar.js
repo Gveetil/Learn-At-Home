@@ -21,6 +21,21 @@ const useStyles = makeStyles((theme) => ({
             duration: theme.transitions.duration.leavingScreen,
         }),
     },
+    appBarShift: {
+        zIndex: theme.zIndex.drawer + 1,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        [theme.breakpoints.up('sm')]: {
+            marginLeft: theme.leftNavBarWidth,
+            width: `calc(100% - ${theme.leftNavBarWidth}px)`,
+            transition: theme.transitions.create(['width', 'margin'], {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.enteringScreen,
+            })
+        },
+    },
     menuButton: {
         marginRight: theme.spacing(2),
     },
@@ -44,8 +59,10 @@ export default function NavBar(props) {
     };
 
     return (
-        <AppBar position="static"
-            className={classes.appBar}
+        <AppBar position="fixed"
+            className={clsx(classes.appBar, {
+                [classes.appBarShift]: state.showLeftNav,
+            })}
         >
             <Toolbar>
                 <IconButton

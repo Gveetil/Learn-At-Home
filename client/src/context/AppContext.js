@@ -104,7 +104,6 @@ const reducer = (state, action) => {
             }
         }
         case AppContextAction.SHOW_LEFT_NAV: {
-            console.log("here", action.show);
             return {
                 ...state,
                 showLeftNav: action.show

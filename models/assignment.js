@@ -38,6 +38,12 @@ module.exports = function (sequelize, DataTypes) {
 
     // Associating Assignment with AssignmentSubmissions view
     Assignment.hasMany(models.AssignmentSubmissions);
+
+    // Associating Assignment with Submissions
+    Assignment.hasMany(models.Submission);
+
+    // Associating Assignment with StudentAssignments view
+    Assignment.hasMany(models.StudentAssignments);
   };
 
   return Assignment;

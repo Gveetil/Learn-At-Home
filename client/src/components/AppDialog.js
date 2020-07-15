@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import { AppContextAction, useAppContext } from "../context/AppContext";
+import AppLogo from "./AppLogo";
+import { RoundedButton } from "./styles";
 
 // The dialog component used by the application 
 export default function AppDialog() {
@@ -17,16 +19,16 @@ export default function AppDialog() {
                 open={state.dialog.show}
                 onClose={handleClose}
                 aria-labelledby="dialog-title">
-                <DialogTitle id="dialog-title">Learn@Home</DialogTitle>
+                <DialogTitle id="dialog-title"> <AppLogo variant="h6" /></DialogTitle>
                 <DialogContent>
                     <DialogContentText color="textPrimary">
                         {state.dialog.message}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="secondary" autoFocus>
+                    <RoundedButton onClick={handleClose} autoFocus>
                         Close
-                    </Button>
+                    </RoundedButton>
                 </DialogActions>
             </Dialog>
         </div >

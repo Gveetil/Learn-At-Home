@@ -4,6 +4,7 @@ import useAuthentication from "./utils/useAuthentication";
 import StudentDashboard from './pages/StudentDashboard';
 import TeacherDashboard from './pages/TeacherDashboard';
 import { TeacherProvider } from "./context/TeacherContext";
+import { StudentProvider } from "./context/StudentContext";
 import Login from "./pages/Login";
 
 // Styling for the application page body
@@ -27,7 +28,10 @@ function App() {
           <TeacherDashboard handleLogout={auth.handleLogout} />
         </TeacherProvider>);
     } else if (accessTypeId === auth.UserAccessType.Student) {
-      return <StudentDashboard handleLogout={auth.handleLogout} />
+      return (
+        <StudentProvider>
+          <StudentDashboard handleLogout={auth.handleLogout} />
+        </StudentProvider>);
     }
     return "";
   }

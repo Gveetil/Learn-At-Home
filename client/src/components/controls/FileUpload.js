@@ -6,11 +6,15 @@ import { DropzoneArea } from 'material-ui-dropzone';
 const useStyles = makeStyles((theme) => ({
     dropzone: {
         minHeight: "2rem",
+        marginBottom: theme.spacing(1),
     },
     text: {
         fontSize: "1rem",
     }
 }));
+
+// Accepted file types
+const acceptedFiles = ["image/*", ".doc", ".docx", ".pdf", ".rtf", ".xls", ".xlsx", ".ppt", ".pptx"];
 
 // The File Upload Control 
 export default function FileUpload(props) {
@@ -26,7 +30,7 @@ export default function FileUpload(props) {
             key={props.fileUploadReset}
             dropzoneClass={classes.dropzone}
             dropzoneParagraphClass={classes.text}
-            acceptedFiles={["image/*", ".doc", ".docx", ".pdf"]}
+            acceptedFiles={acceptedFiles}
             value={props.value}
             onChange={handleChange}
             filesLimit={15}

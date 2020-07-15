@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     toolbar: {
+        backgroundColor: theme.palette.navigation.sidePanel,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-end',

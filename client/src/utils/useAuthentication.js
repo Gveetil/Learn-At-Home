@@ -35,7 +35,6 @@ function useAuthentication() {
         });
 
         getCurrentUser();
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -57,8 +56,13 @@ function useAuthentication() {
             return false;
 
         } catch (error) {
-            dispatch({ type: AppContextAction.LOADING, show: false });
-            return false;
+            if (error && error.response
+                && error.response.status === 401) {
+                // Authentication Errors -- return false
+                dispatch({ type: AppContextAction.LOADING, show: false });
+                return false;
+            }
+            dispatch({ type: AppContextAction.HANDLE_ERROR, error });
         }
     }
 

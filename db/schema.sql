@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `Submissions` (
     `id` INTEGER NOT NULL auto_increment , 
     `comment` TEXT, 
     `submissionDate` DATETIME, 
-    `competedDate` DATETIME, 
+    `markedDate` DATETIME, 
     `createdAt` DATETIME DEFAULT CURRENT_TIMESTAMP, 
     `updatedAt` DATETIME DEFAULT CURRENT_TIMESTAMP, 
     `RatingId` INTEGER, 
@@ -157,6 +157,7 @@ CREATE TABLE IF NOT EXISTS `SubmissionLinks` (
     `link` VARCHAR(500) NOT NULL, 
     `fileType` VARCHAR(100), 
     `dropboxFileId` VARCHAR(255), 
+    `isUploaded` BOOLEAN NOT NULL DEFAULT TRUE, 
     `createdAt` DATETIME DEFAULT CURRENT_TIMESTAMP, 
     `updatedAt` DATETIME DEFAULT CURRENT_TIMESTAMP, 
     `SubmissionId` INTEGER NOT NULL, 
@@ -170,11 +171,51 @@ CREATE OR REPLACE VIEW `AssignmentSubmissions` (
     (SELECT 
 		AC.AssignmentId, 
 		count(S.StudentId) `StudentsSubmitted`, 
-		count(SC.StudentId) `StudentsPending` 
+		(count(SC.StudentId) - count(S.StudentId)) `StudentsPending` 
 	FROM AssignmentClass AC
 	LEFT JOIN StudentClass SC
 		ON AC.ClassId = SC.ClassId
 	LEFT JOIN Submissions S
 		ON AC.AssignmentId = S.AssignmentId
 		AND SC.StudentId = S.StudentId 
-	GROUP BY AC.AssignmentId)
+	GROUP BY AC.AssignmentId);
+
+
+CREATE OR REPLACE VIEW `StudentAssignments` (
+`AssignmentId`, `StudentId` , `SubmissionId`)
+    AS
+    (SELECT 
+		AC.AssignmentId, 
+		SC.StudentId , 
+		S.id SubmissionId
+	FROM StudentClass SC 
+	INNER JOIN AssignmentClass AC
+		ON AC.ClassId = SC.ClassId
+	LEFT JOIN Submissions S
+		ON AC.AssignmentId = S.AssignmentId
+		AND SC.StudentId = S.StudentId );
+
+CREATE OR REPLACE VIEW `UserClassSubjects` (
+`SubjectId`, `SubjectName` , `ClassId`, `ClassName` , `UserId`)
+AS
+(SELECT 
+        S.id SubjectId, S.name SubjectName, 
+        C.id ClassId, C.name ClassName,
+        SC.StudentId UserId
+    FROM Subjects S 
+    INNER JOIN GradeSubjects GS
+        ON GS.SubjectId = S.id
+    INNER JOIN Class C
+        ON C.GradeId = GS.GradeId
+    INNER JOIN StudentClass SC
+        ON SC.ClassId = C.id)
+UNION ALL
+(SELECT 
+	S.id SubjectId, S.name SubjectName, 
+	C.id ClassId, C.name ClassName,
+	TCS.TeacherId UserId
+  FROM TeacherClassSubjects TCS 
+  INNER JOIN Subjects S 
+	ON TCS.SubjectId = S.id
+  INNER JOIN Class C 
+	ON TCS.ClassId = C.id);

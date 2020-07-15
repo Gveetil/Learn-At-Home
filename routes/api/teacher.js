@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const teacherController = require("../../controllers/teacherController");
+const userController = require("../../controllers/userController");
 const assignmentController = require("../../controllers/assignmentController");
 
 // Teacher authorized routes - matches with "/api/teacher"
@@ -19,6 +19,6 @@ router
 
 router
     .route("/classsubjects")
-    .get(teacherController.getTeacherClassSubjects);
+    .get(userController.getClassSubjects);
 
 module.exports = router;

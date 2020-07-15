@@ -16,13 +16,21 @@ import API from '../../utils/API';
 const useStyles = makeStyles((theme) => ({
     content: {
         flexWrap: "nowrap",
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('md')]: {
             flexWrap: "wrap",
             flexDirection: "column",
         },
     },
     spacing: {
         marginRight: theme.spacing(0.8),
+    },
+    cardContent: {
+        paddingTop: theme.spacing(1.5),
+        paddingLeft: theme.spacing(2.5),
+        paddingRight: theme.spacing(2.5),
+        "&:last-child": {
+            paddingBottom: theme.spacing(2.3),
+        }
     },
 }));
 
@@ -84,7 +92,7 @@ export default function AssignmentCard(props) {
             onDelete={deleteAssignmentHandler}
             id={props.assignment.id}
             title={`${getSubjectName(props.assignment.SubjectId)} : ${props.assignment.title}`}>
-            <CardContent align="left">
+            <CardContent align="left" className={classes.cardContent}>
                 <Box display="flex" alignItems="flex-start" className={classes.content}>
                     <Box display="flex" flexWrap="nowrap" flexGrow={1} alignItems="center">
                         <Typography variant="subtitle2" >
@@ -113,16 +121,16 @@ export default function AssignmentCard(props) {
                 <Typography variant="body2" component="p" align="justify" >
                     {props.assignment.instructions}
                 </Typography>
-                <URLViewer value={props.assignment.AssignmentLinks} />
+                <URLViewer pb={1} value={props.assignment.AssignmentLinks} />
                 <Box display="flex" alignItems="flex-end" className={classes.content}>
-                    <Box display="flex" flexWrap="nowrap" flexGrow={1} alignItems="center">
+                    <Box display="flex" flexWrap="nowrap" flexGrow={1} alignSelf="flex-start">
                         <ClassViewer value={props.assignment.AssignmentClasses} />
                     </Box>
-                    <Box display="flex" flexDirection="column" flexGrow={0} alignItems="flex-end">
+                    <Box display="flex" flexDirection="column" flexWrap="wrap" flexGrow={1} alignItems="flex-end">
                         {props.assignment.postedDate
                             && !props.assignment.isLearningTask
                             && props.assignment.AssignmentSubmissions[0] &&
-                            <Box display="flex" flexWrap="nowrap" alignItems="center">
+                            <Box display="flex" py={1} flexWrap="nowrap" alignItems="center">
                                 <Link color="secondary" className={classes.spacing}
                                     variant="body2" href="/submission?type=inbox">
                                     Submissions: {props.assignment.AssignmentSubmissions[0].StudentsSubmitted}</Link>
@@ -134,7 +142,7 @@ export default function AssignmentCard(props) {
                             </Box>
                         }
                         {!props.assignment.postedDate &&
-                            <Box display="flex" flexWrap="nowrap" alignItems="flex-end" alignSelf="flex-end">
+                            <Box display="flex" alignItems="flex-end" alignSelf="flex-end">
                                 <RoundedButton size="small" variant="contained"
                                     onClick={() => postAssignment(props.assignment)}>
                                     Post

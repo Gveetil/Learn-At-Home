@@ -15,7 +15,15 @@ export default {
   },
   // Student APIs
   student: {
-
+    getClassSubjects: function () {
+      return axios.get("/api/student/classsubjects");
+    },
+    fetchTasks: function (taskType) {
+      return axios.get(`/api/student/tasks/${taskType}`);
+    },
+    createSubmission: function (data) {
+      return axios.post("/api/student/submission", data);
+    },
   },
   // Teacher APIs
   teacher: {

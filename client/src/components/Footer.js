@@ -20,9 +20,9 @@ export default function Footer() {
     return (
         <Toolbar component="footer" className={classes.footer}>
             <Box display="flex" margin="auto">
-                <Typography color="inherit">
+                <Typography variant="caption" color="inherit">
                     Learn@Home © 2020.
-                    </Typography>
+                </Typography>
             </Box >
         </Toolbar>
     )

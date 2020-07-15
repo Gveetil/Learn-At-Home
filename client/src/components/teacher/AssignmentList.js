@@ -41,13 +41,10 @@ function AssignmentList(props) {
             if (teacherState.reloadAssignments) {
                 setInitialized(false);
                 try {
-                    // Load master data for the first time only
-                    appDispatch({ type: AppContextAction.LOADING, show: true });
                     const results = await API.teacher.fetchAssignments(listType.type);
                     if (results && results.data && results.status === 200) {
                         teacherDispatch({ type: TeacherContextAction.SET_ASSIGNMENT_LIST, data: results.data });
                     }
-                    appDispatch({ type: AppContextAction.LOADING, show: false });
                 } catch (error) {
                     appDispatch({ type: AppContextAction.HANDLE_ERROR, error });
                 }
@@ -64,7 +61,7 @@ function AssignmentList(props) {
     }
 
     if (teacherState.assignments != null && teacherState.assignments.length > 0)
-        return loadAssignments(listType.title, teacherState.assignments);
+        return renderAssignments(listType.title, teacherState.assignments);
     else
         return (
             <Box mb={5}>
@@ -79,7 +76,7 @@ function AssignmentList(props) {
 }
 
 // Render all assignments in the list  
-function loadAssignments(title, assignmentList) {
+function renderAssignments(title, assignmentList) {
     return (
         <Container maxWidth="md" align="center" >
             {(title !== "") &&

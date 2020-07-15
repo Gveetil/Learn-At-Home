@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FormControlLabel, Grid, Paper, TextField, Box, Container, Switch, Divider } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { RoundedButton } from '../styles';
+import { makeStyles } from '@material-ui/core/styles';
 import API from '../../utils/API';
 import { ToastType, AppContextAction, useAppContext } from "../../context/AppContext";
 import { useTeacherContext } from '../../context/TeacherContext';
@@ -27,6 +28,16 @@ const defaultState = {
     fileUploadReset: 1,
 }
 
+// Styles used by this component
+const useStyles = makeStyles((theme) => ({
+    fill: {
+        width: "100%",
+    },
+    switchLabel: {
+        fontSize: "0.9rem",
+    },
+}));
+
 // Create New Assignment Page
 function NewAssignment(props) {
     /* eslint-disable no-unused-vars */
@@ -35,7 +46,7 @@ function NewAssignment(props) {
     // Selecting the first subject as default
     defaultState.SubjectId = teacherState.classSubjects[0].SubjectId;
     const [formFields, setFormFields] = useState(defaultState);
-
+    const classes = useStyles();
 
     // Update local state on change of form values
     const handleValueChange = (name, value) => {
@@ -139,7 +150,7 @@ function NewAssignment(props) {
         <Container maxWidth="lg">
             <Paper elevation={3}>
                 <form noValidate autoComplete="off">
-                    <Box display="flex" flexGrow={1} p={2}>
+                    <Box display="flex" flexGrow={1} pt={1} p={3}>
                         <Grid container spacing={3} direction="row" justify="flex-start" >
                             <Grid item xs={12} >
                                 <PageHeading >
@@ -147,51 +158,53 @@ function NewAssignment(props) {
                                 </PageHeading>
                                 <Divider />
                             </Grid>
-                            <Grid container item xs={12} spacing={3} sm={8}>
-                                <Grid item xs={12}  >
-                                    <TextField required autoFocus fullWidth
-                                        color="secondary"
-                                        label="Title"
-                                        value={formFields.title}
-                                        name="title"
-                                        variant="filled"
-                                        onChange={handleInputChange}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }} />
-                                </Grid>
-                                <Grid item xs={12} >
-                                    <TextField required fullWidth multiline
-                                        label="Instructions"
-                                        color="secondary"
-                                        name="instructions"
-                                        value={formFields.instructions}
-                                        type="text"
-                                        variant="filled"
-                                        onChange={handleInputChange}
-                                        inputProps={{
-                                            style: { minHeight: '5rem', },
-                                        }}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }} />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <URLListView
-                                        value={formFields.url}
-                                        name="url"
-                                        onChange={handleValueChange} />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <FileUpload
-                                        fileUploadReset={formFields.fileUploadReset}
-                                        name="files"
-                                        value={formFields.files}
-                                        maxSize={DropboxHelper.UPLOAD_FILE_SIZE_LIMIT}
-                                        onChange={handleValueChange} />
+                            <Grid item xs={12} md={8}>
+                                <Grid container spacing={3} >
+                                    <Grid item xs={12}  >
+                                        <TextField required autoFocus fullWidth
+                                            color="secondary"
+                                            label="Title"
+                                            value={formFields.title}
+                                            name="title"
+                                            variant="filled"
+                                            onChange={handleInputChange}
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }} />
+                                    </Grid>
+                                    <Grid item xs={12} >
+                                        <TextField required fullWidth multiline
+                                            label="Instructions"
+                                            color="secondary"
+                                            name="instructions"
+                                            value={formFields.instructions}
+                                            type="text"
+                                            variant="filled"
+                                            onChange={handleInputChange}
+                                            inputProps={{
+                                                style: { minHeight: '5rem', },
+                                            }}
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }} />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <URLListView
+                                            value={formFields.url}
+                                            name="url"
+                                            onChange={handleValueChange} />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <FileUpload
+                                            fileUploadReset={formFields.fileUploadReset}
+                                            name="files"
+                                            value={formFields.files}
+                                            maxSize={DropboxHelper.UPLOAD_FILE_SIZE_LIMIT}
+                                            onChange={handleValueChange} />
+                                    </Grid>
                                 </Grid>
                             </Grid>
-                            <Grid item xs={12} sm={4}>
+                            <Grid item xs={12} md={4}>
                                 <Box display="flex" height="100%" flexDirection="column" p={0} m={0}>
                                     <Grid container spacing={3} alignItems="center">
                                         <Grid item xs={12} sm={6}>
@@ -202,6 +215,7 @@ function NewAssignment(props) {
                                                     name="isLearningTask"
                                                     inputProps={{ 'aria-label': 'secondary checkbox' }} />}
                                                 label="Learning Task"
+                                                classes={{ label: classes.switchLabel }}
                                             />
                                         </Grid>
                                         <Grid item xs={12} sm={6}>
@@ -232,19 +246,20 @@ function NewAssignment(props) {
                                                 name="classes"
                                                 onChange={(event, values) => handleValueChange('classes', values)} />
                                         </Grid>
-                                        {(formFields.error === '') ? '' :
-                                            <Grid item xs={12}  >
-                                                <Alert severity="error">{formFields.error}</Alert>
-                                            </Grid>}
                                     </Grid>
-                                    <Box display="flex" height="100%" flexGrow={1} flexWrap="nowrap"
-                                        justifyContent="flex-end" alignItems="flex-start" pt={2}>
+                                    <Box display="flex" flexGrow={1} flexWrap="nowrap"
+                                        justifyContent="flex-end" pt={2}>
                                         <RoundedButton onClick={handleSave}
                                             type="submit"
                                             variant="contained">Save</RoundedButton>
                                         <RoundedButton onClick={handlePost}
                                             variant="contained">Post</RoundedButton>
                                     </Box>
+                                    {(formFields.error === '') ? '' :
+                                        <Box className={classes.fill} pt={2}>
+                                            <Alert severity="error">{formFields.error}</Alert>
+                                        </Box>
+                                    }
                                 </Box>
                             </Grid>
                         </Grid>

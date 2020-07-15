@@ -17,38 +17,49 @@ const theme = createMuiTheme({
 
         },
         secondary: {
-            main: teal[500],
+            main: teal[400],
             contrastText: white,
         },
         footer: {
             main: blueGrey[50],
-            contrastText: teal[500],
+            contrastText: teal[900],
         },
         header: {
             text: blueGrey[700],
             hoverText: 'blue',
         },
         assignment: {
-            main: "#c8e6c9",
-            contrastText: blueGrey[700],
-        },
-        learningTask: {
             main: "#d7ccc8",
             contrastText: blueGrey[700],
         },
+        learningTask: {
+            main: "#c8e6c9",
+            contrastText: blueGrey[700],
+        },
+        button: {
+            main: teal[600],
+            hover: teal[400],
+        },
         navigation: {
             text: blueGrey[700],
-            selected: 'blue',
+            selected: teal[500],
             background: blueGrey[50],
             hover: grey[100],
+            sidePanel: grey[100],
+            title: blueGrey[50],
         },
         delete: {
             main: "#ef5350",
         },
+        linkButton: {
+            main: "white",
+            contrastText: "blue",
+            hover: blueGrey[50],
+        }
     },
     logo: {
-        main: teal[500],
-        secondary: "#bf360c",
+        main: teal[600],
+        secondary: "#a1887f",
     },
     primary: blueGrey,
     secondary: teal,

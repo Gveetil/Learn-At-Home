@@ -14,7 +14,7 @@ import NavigationWrapper from "../components/NavigationWrapper";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import NewAssignment from "../components/teacher/NewAssignment";
 import AssignmentList from "../components/teacher/AssignmentList";
 import API from '../utils/API';
@@ -44,24 +44,20 @@ const treeViewOptions = [
 // The teacher dashboard 
 function TeacherDashboard(props) {
     /* eslint-disable no-unused-vars */
-    const [state, _] = useAppContext();
-    const [appState, appDispatch] = useAppContext();
-    const [teacherState, teacherDispatch] = useTeacherContext();
+    const [_, appDispatch] = useAppContext();
+    /* eslint-disable no-unused-vars */
+    const [__, teacherDispatch] = useTeacherContext();
     const [initialized, setInitialized] = useState(false);
 
     // Load subjects and classes taught by this user when the page is first loaded
     useEffect(() => {
         async function initializeClassSubjects() {
             try {
-                console.log("Loading teacher data ...")
                 // Load teacher master data
-                appDispatch({ type: AppContextAction.LOADING, show: true });
                 const results = await API.teacher.getClassSubjects();
                 if (results && results.data && results.status === 200) {
                     teacherDispatch({ type: TeacherContextAction.SET_CLASS_SUBJECTS, classSubjects: results.data });
                 }
-                appDispatch({ type: AppContextAction.LOADING, show: false });
-                console.log("Loading teacher data - completed...")
                 setInitialized(true);
             } catch (error) {
                 appDispatch({ type: AppContextAction.HANDLE_ERROR, error });
@@ -81,7 +77,7 @@ function TeacherDashboard(props) {
             <Box display="flex">
                 <NavigationPanel>
                     <AppTreeView
-                        defaultExpanded={['assignment', 'submission']}
+                        defaultExpanded={['/assignment', '/submission']}
                         defaultSelected='new'
                         items={treeViewOptions}
                     />
@@ -99,6 +95,7 @@ function TeacherDashboard(props) {
                             <Route path="/submission">
                                 <div>submission</div>
                             </Route>
+                            <Redirect from="/" to="/add" />
                         </Switch>
                     </Box>
                     <Footer />

@@ -24,18 +24,18 @@ export const NavButton = withStyles({
 
 export const RoundedButton = withStyles({
     root: {
-        color: theme.palette.getContrastText(theme.secondary[500]),
-        backgroundColor: theme.secondary[500],
-        '&:hover': {
-            backgroundColor: theme.secondary[700],
-        },
-        margin: theme.spacing(0.5),
+        color: props => props.color || theme.palette.secondary.contrastText,
+        backgroundColor: props => props.background || theme.palette.button.main,
+        '&:hover, &.active:hover': { backgroundColor: props => props.hover || theme.palette.button.hover, },
+        margin: props => props.margin || theme.spacing(0.5),
         paddingLeft: theme.spacing(3),
         paddingRight: theme.spacing(3),
-        borderRadius: "16px",
+        marginTop: "auto",
+        borderRadius: props => props.borderRadius || "16px",
     },
     label: {
-        fontWeight: "300",
+        fontSize: "0.8rem",
+        fontWeight: "500",
     }
 })(Button);
 
@@ -51,3 +51,31 @@ export const PageHeading = withStyles({
     },
 })(Typography);
 
+// Regular Button used in the application 
+export const AppButton = withStyles({
+    root: {
+        padding: theme.spacing(0.6),
+        paddingRight: theme.spacing(1.7),
+        paddingLeft: props => props.pl || theme.spacing(1.2),
+        '& > span > svg': {
+            marginRight: theme.spacing(1),
+        },
+        marginTop: "auto",
+        [theme.breakpoints.down('xs')]: {
+            '& > span > svg': {
+                marginRight: theme.spacing(0.5),
+                width: 0,
+            }
+        }
+    },
+})(RoundedButton);
+
+export const NavigationTitle = withStyles({
+    root: {
+        ...theme.typography.button,
+        backgroundColor: theme.palette.navigation.title,
+        color: theme.palette.navigation.text,
+        padding: theme.spacing(1),
+        paddingLeft: theme.spacing(3),
+    }
+})(Typography);
