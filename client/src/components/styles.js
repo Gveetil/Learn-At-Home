@@ -24,14 +24,14 @@ export const NavButton = withStyles({
 
 export const RoundedButton = withStyles({
     root: {
-        color: props => props.color || theme.palette.secondary.contrastText,
-        backgroundColor: props => props.background || theme.palette.button.main,
-        '&:hover, &.active:hover': { backgroundColor: props => props.hover || theme.palette.button.hover, },
-        margin: props => props.margin || theme.spacing(0.5),
+        color: theme.palette.secondary.contrastText,
+        backgroundColor: theme.palette.button.main,
+        '&:hover, &.active:hover': { backgroundColor: theme.palette.button.hover, },
+        margin: theme.spacing(0.5),
         paddingLeft: theme.spacing(3),
         paddingRight: theme.spacing(3),
         marginTop: "auto",
-        borderRadius: props => props.borderRadius || "16px",
+        borderRadius: "16px",
     },
     label: {
         fontSize: "0.8rem",
@@ -39,6 +39,32 @@ export const RoundedButton = withStyles({
     }
 })(Button);
 
+export const LinkButton = withStyles({
+    root: {
+        color: theme.palette.linkButton.contrastText,
+        backgroundColor: theme.palette.linkButton.main,
+        '&:hover, &.active:hover': { backgroundColor: theme.palette.linkButton.hover, },
+        padding: theme.spacing(0.6),
+        paddingRight: theme.spacing(1.7),
+        paddingLeft: 0,
+        '& > span > svg': {
+            marginRight: theme.spacing(1),
+        },
+        borderRadius: "4px",
+        margin: "0",
+        [theme.breakpoints.down('xs')]: {
+            '& > span > svg': {
+                marginRight: theme.spacing(0.5),
+                width: 0,
+            }
+        }
+    },
+    label: {
+        textTransform: 'none',
+        fontSize: "0.8rem",
+        fontWeight: "500",
+    }
+})(Button);
 
 export const PageHeading = withStyles({
     root: {
@@ -56,7 +82,7 @@ export const AppButton = withStyles({
     root: {
         padding: theme.spacing(0.6),
         paddingRight: theme.spacing(1.7),
-        paddingLeft: props => props.pl || theme.spacing(1.2),
+        paddingLeft: theme.spacing(1.2),
         '& > span > svg': {
             marginRight: theme.spacing(1),
         },

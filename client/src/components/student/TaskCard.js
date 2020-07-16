@@ -9,7 +9,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import AppItemCard from '../controls/AppItemCard';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import URLViewer from '../controls/URLViewer';
-import { AppButton } from "../styles";
+import { LinkButton, AppButton } from "../styles";
 import FileUpload from "../controls/FileUpload";
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import DropboxHelper from "../../utils/DropboxHelper";
@@ -189,23 +189,18 @@ export default function TaskCard(props) {
                             {props.task.Submissions[0].comment &&
                                 <>
                                     <Box display="flex" flexWrap="nowrap" mt={1} alignItems="center">
-                                        <AppButton size="small" margin="0"
+                                        <LinkButton size="small"
                                             component="a"
-                                            borderRadius="4"
-                                            pl="0"
-                                            background={theme.palette.linkButton.main}
-                                            hover={theme.palette.linkButton.hover}
-                                            color={theme.palette.linkButton.contrastText}
                                             onClick={() => setFormFields({ ...formFields, showComment: !formFields.showComment })}
                                         ><DoubleArrowIcon />
-                                            Feedback Comments
-                                        </AppButton>
+                                            Teacher Feedback
+                                        </LinkButton>
                                     </Box>
                                     <Collapse in={formFields.showComment} timeout="auto" unmountOnExit>
                                         <Box mt={1} >
                                             <Box display="flex" flexWrap="nowrap" alignItems="center">
                                                 <Typography variant="subtitle2" >
-                                                    Commented On:
+                                                    Feedback Date:
                                                 </Typography>
                                                 <Typography variant="body2" component="p" >
                                                     {format(new Date(props.task.Submissions[0].markedDate), "dd MMMM yyyy")}
