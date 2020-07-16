@@ -24,7 +24,7 @@ module.exports = function (sequelize, DataTypes) {
     Submission.hasMany(models.SubmissionLink);
 
     // Associating Submission with StudentAssignments view
-    Submission.hasOne(models.StudentAssignments);
+    Submission.hasMany(models.StudentAssignments);
   };
 
   return Submission;

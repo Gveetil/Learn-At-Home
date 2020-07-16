@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const userController = require("../../controllers/userController");
 const assignmentController = require("../../controllers/assignmentController");
+const submissionController = require("../../controllers/submissionController");
 
 // Teacher authorized routes - matches with "/api/teacher"
 
@@ -16,6 +17,14 @@ router
 router
     .route("/assignment/:id")
     .delete(assignmentController.delete);
+
+router
+    .route("/submission/:type")
+    .get(submissionController.fetchAllSubmissions);
+
+router
+    .route("/ratings")
+    .get(submissionController.fetchAllRatings);
 
 router
     .route("/classsubjects")

@@ -77,6 +77,8 @@ CREATE TABLE IF NOT EXISTS `StudentClass` (
 CREATE TABLE IF NOT EXISTS `Ratings` (
     `id` INTEGER NOT NULL auto_increment , 
     `name` VARCHAR(50) NOT NULL, 
+    `createdAt` DATETIME DEFAULT CURRENT_TIMESTAMP, 
+    `updatedAt` DATETIME DEFAULT CURRENT_TIMESTAMP, 
     PRIMARY KEY (`id`));
 
 CREATE TABLE IF NOT EXISTS `TeacherClassSubjects` (
@@ -180,20 +182,25 @@ CREATE OR REPLACE VIEW `AssignmentSubmissions` (
 		AND SC.StudentId = S.StudentId 
 	GROUP BY AC.AssignmentId);
 
-
 CREATE OR REPLACE VIEW `StudentAssignments` (
-`AssignmentId`, `StudentId` , `SubmissionId`)
+`AssignmentId`, `StudentId`, `StudentName`, `ClassName` , `SubmissionId`)
     AS
     (SELECT 
 		AC.AssignmentId, 
 		SC.StudentId , 
+        CONCAT(U.firstName , " ", U.lastName)  StudentName,
+        C.name ClassName,
 		S.id SubmissionId
 	FROM StudentClass SC 
+    INNER JOIN Users U
+		ON U.id = SC.StudentId
+    INNER JOIN Class C
+		ON C.id = SC.ClassId
 	INNER JOIN AssignmentClass AC
 		ON AC.ClassId = SC.ClassId
 	LEFT JOIN Submissions S
 		ON AC.AssignmentId = S.AssignmentId
-		AND SC.StudentId = S.StudentId );
+		AND SC.StudentId = S.StudentId);
 
 CREATE OR REPLACE VIEW `UserClassSubjects` (
 `SubjectId`, `SubjectName` , `ClassId`, `ClassName` , `UserId`)

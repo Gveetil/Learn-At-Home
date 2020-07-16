@@ -4,10 +4,22 @@
 // This is a workaround since we don't have classes / mapping tables as part of the system yet   
 module.exports = function (sequelize, DataTypes) {
     const StudentAssignments = sequelize.define("StudentAssignments", {
-        StudentId: {
+        AssignmentId: {
             type: DataTypes.INTEGER,
+            primaryKey: true,
             allowNull: false,
         },
+        SubmissionId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        StudentId: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            allowNull: false,
+        },
+        StudentName: DataTypes.STRING,
+        ClassName: DataTypes.STRING,
     });
 
     // Avoid table creation for this model since it is a view
@@ -18,12 +30,13 @@ module.exports = function (sequelize, DataTypes) {
     StudentAssignments.removeAttribute('updatedAt');
 
     StudentAssignments.associate = function (models) {
+        StudentAssignments.hasOne(models.Submission, {
+            foreignKey: 'AssignmentId',
+            otherKey: "SubmissionID",
+        });
         StudentAssignments.belongsTo(models.Assignment);
     };
 
-    StudentAssignments.associate = function (models) {
-        StudentAssignments.belongsTo(models.Submission);
-    };
 
     return StudentAssignments;
 };
