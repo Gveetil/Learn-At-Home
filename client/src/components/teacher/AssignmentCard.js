@@ -5,11 +5,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import { TeacherContextAction, useTeacherContext } from '../../context/TeacherContext';
 import { ToastType, AppContextAction, useAppContext } from "../../context/AppContext";
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import PostAddIcon from '@material-ui/icons/PostAdd';
 import AppItemCard from '../controls/AppItemCard';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import URLViewer from '../controls/URLViewer';
 import ClassViewer from '../controls/ClassViewer';
-import { RoundedButton } from "../styles";
+import { LinkButton } from "../styles";
 import API from '../../utils/API';
 
 // Styles used by this component
@@ -132,21 +133,21 @@ export default function AssignmentCard(props) {
                             && props.assignment.AssignmentSubmissions[0] &&
                             <Box display="flex" py={1} flexWrap="nowrap" alignItems="center">
                                 <Link color="secondary" className={classes.spacing}
-                                    variant="body2" href="/submission?type=inbox">
+                                    variant="body2" href="/submission?type=all">
                                     Submissions: {props.assignment.AssignmentSubmissions[0].StudentsSubmitted}</Link>
                                 <Divider orientation="vertical" className={classes.spacing}
                                     flexItem color="secondary" />
                                 <Link color="secondary" className={classes.spacing}
-                                    variant="body2" href="/submission?type=inprogress">
+                                    variant="body2" href="/submission?type=all">
                                     Pending: {props.assignment.AssignmentSubmissions[0].StudentsPending}</Link>
                             </Box>
                         }
                         {!props.assignment.postedDate &&
                             <Box display="flex" alignItems="flex-end" alignSelf="flex-end">
-                                <RoundedButton size="small" variant="contained"
+                                <LinkButton
                                     onClick={() => postAssignment(props.assignment)}>
-                                    Post
-                            </RoundedButton>
+                                    <PostAddIcon /> Post
+                            </LinkButton>
                             </Box>}
                     </Box>
                 </Box>

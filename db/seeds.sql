@@ -70,9 +70,9 @@ INSERT INTO `GradeSubjects` (`SubjectId`,`GradeId`) VALUES
 ('6','7'), ('7','7'), ('8','7'), ('9','7'),('10','7');
 
 INSERT INTO `Class` (`id`,`name`, `GradeId`, `TeacherId`) VALUES 
-('1','PREP A','1',NULL), 
-('2','PREP B','1',NULL), 
-('3','PREP C','1',NULL), 
+('1','Prep A','1',NULL),
+('2','Prep B','1',NULL),
+('3','Prep C','1',NULL),
 ('4','1 A','2',NULL), 
 ('5','1 B','2',NULL), 
 ('6','1 C','2',NULL), 

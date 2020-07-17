@@ -20,7 +20,7 @@ export default function Footer() {
     return (
         <Toolbar component="footer" className={classes.footer}>
             <Box display="flex" margin="auto">
-                <Typography variant="caption" color="inherit">
+                <Typography variant="button" color="inherit">
                     Learn@Home © 2020.
                 </Typography>
             </Box >

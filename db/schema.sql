@@ -168,12 +168,13 @@ CREATE TABLE IF NOT EXISTS `SubmissionLinks` (
         ON DELETE NO ACTION); 
 
 CREATE OR REPLACE VIEW `AssignmentSubmissions` (
-`AssignmentId` , `StudentsSubmitted`, `StudentsPending`)
+`AssignmentId` , `NotMarked`, `StudentsSubmitted`, `StudentsPending`)
     AS
     (SELECT 
 		AC.AssignmentId, 
-		count(S.StudentId) `StudentsSubmitted`, 
-		(count(SC.StudentId) - count(S.StudentId)) `StudentsPending` 
+		count(SC.StudentId) - count(S.markedDate) `NotMarked`,
+		count(S.submissionDate) `StudentsSubmitted`, 
+		(count(SC.StudentId) - count(S.submissionDate)) `StudentsPending` 
 	FROM AssignmentClass AC
 	LEFT JOIN StudentClass SC
 		ON AC.ClassId = SC.ClassId

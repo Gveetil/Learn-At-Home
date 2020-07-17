@@ -57,40 +57,38 @@ function Login(props) {
                         <Box display="flex" align="center" flexGrow={1} p={2} py={4}>
                             <Grid container spacing={3} direction="row" alignContent="stretch"
                                 justify="center" alignItems="center" >
-                                <Grid item xs={12}>
-                                    <AppLogo variant="h5" />
+                                <Grid item xs={12} md={10} >
+                                    <Box mb={1}>
+                                        <AppLogo variant="h5" />
+                                    </Box>
                                 </Grid>
-                                {(formFields.error === '') ? '' :
-                                    <Grid item xs={12} >
-                                        <Alert severity="error">{formFields.error}</Alert>
-                                    </Grid>}
-                                <Grid item xs={10} >
+                                <Grid item xs={12} md={10} >
+                                    {(formFields.error === '') ? '' :
+                                        <Box mb={2}>
+                                            <Alert severity="error">{formFields.error}</Alert>
+                                        </Box>}
                                     <TextField required autoFocus fullWidth
                                         color="secondary"
                                         label="User Name"
                                         value={formFields.userName}
                                         name="userName"
-                                        onChange={handleInputChange}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }} />
+                                        onChange={handleInputChange} />
                                 </Grid>
-                                <Grid item xs={10}>
+                                <Grid item xs={12} md={10} >
                                     <TextField required fullWidth
                                         label="Password"
                                         color="secondary"
                                         name="password"
                                         value={formFields.password}
                                         type="password"
-                                        onChange={handleInputChange}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }} />
+                                        onChange={handleInputChange} />
                                 </Grid>
-                                <Grid item xs={12} >
-                                    <RoundedButton onClick={handleLogin}
-                                        type="submit"
-                                        variant="contained">Sign In</RoundedButton>
+                                <Grid item xs={12} md={10} >
+                                    <Box mt={1}>
+                                        <RoundedButton onClick={handleLogin}
+                                            type="submit"
+                                            variant="contained">Sign In</RoundedButton>
+                                    </Box>
                                 </Grid>
                             </Grid>
                         </Box>

@@ -16,8 +16,10 @@ const useStyles = props => makeStyles((theme) => ({
     title: {
         padding: 0,
         color: theme.palette[props.palette].contrastText,
+        fontSize: (props.fontSize || 'auto'),
     },
     iconButton: {
+        padding: (props.buttonSize === "small" ? theme.spacing(1) : 'auto'),
         color: theme.palette[props.palette].contrastText,
     },
 }));
@@ -25,7 +27,7 @@ const useStyles = props => makeStyles((theme) => ({
 // This component generates a custom card for application items
 export default function AppItemCard(props) {
     const classes = useStyles(props)();
-    const [expanded, setExpanded] = useState(true);
+    const [expanded, setExpanded] = useState(!props.collapse);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -35,8 +37,10 @@ export default function AppItemCard(props) {
         <Card>
             <CardContent className={classes.cardHeader}>
                 <Box display="flex" alignItems="center">
-                    <Box display="flex" flexGrow={1} alignItems="center">
+                    <Box display="flex" flexGrow={1}
+                        alignItems="center">
                         <IconButton
+                            size={props.buttonSize || "medium"}
                             onClick={handleExpandClick}
                             aria-expanded={expanded}
                             aria-label="show more"

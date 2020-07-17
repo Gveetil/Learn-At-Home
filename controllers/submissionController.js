@@ -12,11 +12,39 @@ module.exports = {
                 StudentId: request.user.id,
                 SubmissionLinks: getSubmissionLinks(links),
             };
-            console.log(newSubmission);
             const result = await db.Submission.create(newSubmission, {
                 include: [
                     db.SubmissionLink
                 ]
+            });
+            response.json(result);
+        } catch (error) {
+            console.log(error);
+            return response.status(500).send(error.message);
+        }
+    },
+    // Create a new task submission with rating only 
+    createRatingOnly: async function (request, response) {
+        try {
+            const { AssignmentId, StudentId, comment, markedDate, RatingId } = request.body;
+
+            const newSubmission = {
+                AssignmentId, StudentId, comment, markedDate, RatingId
+            };
+            const result = await db.Submission.create(newSubmission);
+            response.json(result);
+        } catch (error) {
+            console.log(error);
+            return response.status(500).send(error.message);
+        }
+    },
+    // Update submission rating
+    update: async function (request, response) {
+        try {
+            const result = await db.Submission.update(request.body, {
+                where: {
+                    id: request.body.id,
+                },
             });
             response.json(result);
         } catch (error) {
@@ -76,7 +104,10 @@ module.exports = {
             const filter = getSubmissionFilter(submissionType);
             const result = await db.StudentAssignments.findAll({
                 where: filter,
-                order: [[db.Sequelize.col('Assignment.postedDate'), "DESC"]],
+                order: [
+                    [db.Sequelize.col('Assignment.postedDate'), "DESC"],
+                    [db.Sequelize.col('Assignment.id'), "DESC"],
+                ],
                 include: [{
                     model: db.Assignment,
                     required: true,
@@ -87,8 +118,8 @@ module.exports = {
                         isLearningTask: { [db.Sequelize.Op.eq]: false },
                         TeacherId: { [db.Sequelize.Op.eq]: request.user.id },
                     },
-                    attributes: ['id', 'title', 'isLearningTask', 'dueDate',
-                        'postedDate', 'TeacherId', 'SubjectId'],
+                    attributes: ['id', 'title', 'dueDate',
+                        'postedDate', 'SubjectId'],
                 }, {
                     model: db.Submission,
                     on: {
@@ -168,13 +199,13 @@ function getSubmissionFilter(assignmentType) {
         }
         case "inprogress": {
             return {
-                "$Assignment.dueDate$": { [db.Sequelize.Op.gte]: Date.now() },
+                "$Assignment.dueDate$": { [db.Sequelize.Op.gt]: db.Sequelize.fn('date', db.Sequelize.fn('now')) },
                 "$StudentAssignments.SubmissionId$": { [db.Sequelize.Op.eq]: null },
             };
         }
         case "overdue": {
             return {
-                "$Assignment.dueDate$": { [db.Sequelize.Op.lt]: Date.now() },
+                "$Assignment.dueDate$": { [db.Sequelize.Op.lte]: db.Sequelize.fn('date', db.Sequelize.fn('now')) },
                 "$StudentAssignments.SubmissionId$": { [db.Sequelize.Op.eq]: null },
             };
         }
@@ -186,9 +217,7 @@ function getSubmissionFilter(assignmentType) {
         }
         default: {
             // Default: Get all submissions - new and marked
-            return {
-                "$StudentAssignments.SubmissionId$": { [db.Sequelize.Op.ne]: null },
-            };
+            return {};
         }
     }
 }

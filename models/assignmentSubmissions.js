@@ -3,6 +3,7 @@
 // This model is used to query a view to find total submissions per assignment  
 module.exports = function (sequelize, DataTypes) {
     const AssignmentSubmissions = sequelize.define("AssignmentSubmissions", {
+        NotMarked: DataTypes.INTEGER,
         StudentsSubmitted: DataTypes.INTEGER,
         StudentsPending: DataTypes.INTEGER,
     });

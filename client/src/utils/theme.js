@@ -1,7 +1,7 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import grey from '@material-ui/core/colors/grey';
-import teal from '@material-ui/core/colors/teal';
+import secondaryColor from '@material-ui/core/colors/cyan';
 import path from 'path';
 
 // Path to images folder
@@ -17,32 +17,45 @@ const theme = createMuiTheme({
 
         },
         secondary: {
-            main: teal[400],
+            main: secondaryColor[800],
             contrastText: white,
         },
         footer: {
             main: blueGrey[50],
-            contrastText: teal[900],
+            contrastText: secondaryColor[900],
         },
         header: {
-            text: blueGrey[700],
-            hoverText: 'blue',
+            text: secondaryColor[800],
+            hoverText: secondaryColor[600],
         },
         assignment: {
-            main: "#d7ccc8",
+            main: "#c5cae9",
             contrastText: blueGrey[700],
         },
         learningTask: {
             main: "#c8e6c9",
             contrastText: blueGrey[700],
         },
+        taskSubmissionList: {
+            main: grey[200],
+            body: grey[100],
+            contrastText: blueGrey[600],
+        },
+        submitted: {
+            main: "#a5d6a7",
+            contrastText: blueGrey[700],
+        },
+        notSubmitted: {
+            main: "#d7ccc8",
+            contrastText: blueGrey[700],
+        },
         button: {
-            main: teal[600],
-            hover: teal[400],
+            main: secondaryColor[700],
+            hover: secondaryColor[600],
         },
         navigation: {
             text: blueGrey[700],
-            selected: teal[500],
+            selected: secondaryColor[700],
             background: blueGrey[50],
             hover: grey[100],
             sidePanel: grey[100],
@@ -53,16 +66,17 @@ const theme = createMuiTheme({
         },
         linkButton: {
             main: "white",
-            contrastText: "blue",
+            contrastText: secondaryColor[700],
+            secondaryText: "blue",
             hover: blueGrey[50],
         }
     },
     logo: {
-        main: teal[600],
-        secondary: "#a1887f",
+        main: "#00897b",
+        secondary: "#ba000d",
     },
     primary: blueGrey,
-    secondary: teal,
+    secondary: secondaryColor,
     leftNavBarWidth: 250,
     overrides: {
         MuiSelect: {
@@ -83,7 +97,7 @@ const theme = createMuiTheme({
         },
         MuiPickersDay: {
             daySelected: {
-                backgroundColor: teal[500],
+                backgroundColor: secondaryColor[500],
                 color: white,
             },
             current: {
@@ -93,6 +107,7 @@ const theme = createMuiTheme({
         },
     },
     typography: {
+        "fontFamily": `"Mada", "Cantarell", "Open Sans", sans-serif`,
         subtitle1: {
             color: blueGrey[700],
             fontWeight: 'bold',

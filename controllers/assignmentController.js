@@ -14,7 +14,6 @@ module.exports = {
                 AssignmentClasses: classes.map(item => ({ "ClassId": item.ClassId })),
                 AssignmentLinks: getAssignmentLinks(links),
             };
-            console.log(newAssignment);
             const result = await db.Assignment.create(newAssignment, {
                 include: [
                     db.AssignmentClass, db.AssignmentLink
@@ -108,7 +107,7 @@ function getAssignmentFilter(assignmentType) {
         case "completed": {
             return {
                 isLearningTask: { [db.Sequelize.Op.eq]: false },
-                "$AssignmentSubmissions.StudentsPending$": { [db.Sequelize.Op.eq]: 0 },
+                "$AssignmentSubmissions.NotMarked$": { [db.Sequelize.Op.eq]: 0 },
             };
         }
         default: {

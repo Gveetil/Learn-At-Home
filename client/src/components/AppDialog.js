@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import { AppContextAction, useAppContext } from "../context/AppContext";
 import AppLogo from "./AppLogo";
 import { RoundedButton } from "./styles";

@@ -247,6 +247,13 @@ function NewAssignment(props) {
                                                 onChange={(event, values) => handleValueChange('classes', values)} />
                                         </Grid>
                                     </Grid>
+                                    {(formFields.error === '') ? '' :
+                                        <Box display="flex" flexGrow={1} flexWrap="nowrap"
+                                            justifyContent="flex-end" pt={1}>
+                                            <Box className={classes.fill} pt={2}>
+                                                <Alert severity="error">{formFields.error}</Alert>
+                                            </Box>
+                                        </Box>}
                                     <Box display="flex" flexGrow={1} flexWrap="nowrap"
                                         justifyContent="flex-end" pt={2}>
                                         <RoundedButton onClick={handleSave}
@@ -255,11 +262,6 @@ function NewAssignment(props) {
                                         <RoundedButton onClick={handlePost}
                                             variant="contained">Post</RoundedButton>
                                     </Box>
-                                    {(formFields.error === '') ? '' :
-                                        <Box className={classes.fill} pt={2}>
-                                            <Alert severity="error">{formFields.error}</Alert>
-                                        </Box>
-                                    }
                                 </Box>
                             </Grid>
                         </Grid>

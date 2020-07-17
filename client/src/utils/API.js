@@ -42,5 +42,17 @@ export default {
     postAssignment: function (data) {
       return axios.put(`/api/teacher/assignment`, data);
     },
+    fetchSubmissions: function (submissionType) {
+      return axios.get(`/api/teacher/submission/${submissionType}`);
+    },
+    fetchRatings: function () {
+      return axios.get(`/api/teacher/ratings`);
+    },
+    createSubmission: function (data) {
+      return axios.post("/api/teacher/submission", data);
+    },
+    updateSubmission: function (data) {
+      return axios.put("/api/teacher/submission", data);
+    },
   },
 };

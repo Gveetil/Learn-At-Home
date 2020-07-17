@@ -9,7 +9,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import AppItemCard from '../controls/AppItemCard';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import URLViewer from '../controls/URLViewer';
-import { LinkButton, AppButton } from "../styles";
+import { SecondaryLinkButton, LinkButton } from "../styles";
 import FileUpload from "../controls/FileUpload";
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import DropboxHelper from "../../utils/DropboxHelper";
@@ -184,17 +184,17 @@ export default function TaskCard(props) {
                             </Typography>
                             </Box>
                             <Box justifySelf="flex-start">
-                                <URLViewer pt="0.5" value={props.task.Submissions[0].SubmissionLinks} />
+                                <URLViewer pt="1" value={props.task.Submissions[0].SubmissionLinks} />
                             </Box>
                             {props.task.Submissions[0].comment &&
                                 <>
                                     <Box display="flex" flexWrap="nowrap" mt={1} alignItems="center">
-                                        <LinkButton size="small"
+                                        <SecondaryLinkButton size="small"
                                             component="a"
                                             onClick={() => setFormFields({ ...formFields, showComment: !formFields.showComment })}
                                         ><DoubleArrowIcon />
                                             Teacher Feedback
-                                        </LinkButton>
+                                        </SecondaryLinkButton>
                                     </Box>
                                     <Collapse in={formFields.showComment} timeout="auto" unmountOnExit>
                                         <Box mt={1} >
@@ -225,14 +225,14 @@ export default function TaskCard(props) {
                 {!props.isSubmitted &&
                     <Box display="flex" flexGrow={1} flexWrap="nowrap" justifyContent="flex-end">
                         {(!props.task.isLearningTask) &&
-                            <AppButton variant="contained"
+                            <LinkButton
                                 onClick={() => clearTaskSubmission()}>
                                 <CancelIcon /> Clear
-                            </AppButton>}
-                        <AppButton variant="contained"
+                            </LinkButton>}
+                        <LinkButton
                             onClick={() => submitTask(props.task)}>
                             <CheckCircleIcon /> {(props.task.isLearningTask) ? "Done" : "Submit"}
-                        </AppButton>
+                        </LinkButton>
                     </Box>}
             </CardContent>
         </AppItemCard >

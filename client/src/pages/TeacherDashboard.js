@@ -20,6 +20,7 @@ import AssignmentList from "../components/teacher/AssignmentList";
 import API from '../utils/API';
 import { AppContextAction, useAppContext } from "../context/AppContext";
 import { TeacherContextAction, useTeacherContext } from '../context/TeacherContext';
+import SubmissionList from "../components/teacher/SubmissionList";
 
 // The tree view options available for a teacher
 const treeViewOptions = [
@@ -93,7 +94,7 @@ function TeacherDashboard(props) {
                                 <AssignmentList />
                             </Route>
                             <Route path="/submission">
-                                <div>submission</div>
+                                <SubmissionList />
                             </Route>
                             <Redirect from="/" to="/add" />
                         </Switch>

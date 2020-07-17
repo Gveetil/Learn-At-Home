@@ -39,7 +39,7 @@ export default function MultiSelectClass(props) {
                 </React.Fragment>
             )}
             renderInput={(params) => (
-                <TextField {...params} variant="filled" label="Class" required
+                <TextField {...params} label="Class" required
                     InputLabelProps={{
                         shrink: true,
                     }}

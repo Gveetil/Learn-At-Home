@@ -67,15 +67,15 @@ function TaskList(props) {
         return renderTasks(listType.title, studentState.tasks);
     else
         return (
-            <Box mb={5}>
+            <Container maxWidth="md" align="center" >
                 <Paper elevation={3}>
-                    <Box align="center" p={5}>
+                    <Box align="center" mt={5} p={5}>
                         <Typography variant="h6" component="h6">
                             {listType.empty}
                         </Typography>
                     </Box>
                 </Paper>
-            </Box>);
+            </Container>);
 }
 
 // Render all tasks in the list  
@@ -89,7 +89,7 @@ function renderTasks(title, taskList) {
                     </PageHeading>
                 </Box>)}
             <Box align="left" mt={1}>
-                <Grid container justify="center" spacing={2}>
+                <Grid container justify="center" spacing={3}>
                     {taskList.map((task, index) => (
                         <Grid item xs={12} key={index}>
                             <TaskCard task={task}

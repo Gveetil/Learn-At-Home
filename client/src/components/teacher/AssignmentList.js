@@ -64,15 +64,15 @@ function AssignmentList(props) {
         return renderAssignments(listType.title, teacherState.assignments);
     else
         return (
-            <Box mb={5}>
+            <Container maxWidth="md" align="center" >
                 <Paper elevation={3}>
-                    <Box align="center" p={5}>
+                    <Box align="center" mt={5} p={5}>
                         <Typography variant="h6" component="h6">
                             {listType.empty}
                         </Typography>
                     </Box>
                 </Paper>
-            </Box>);
+            </Container>);
 }
 
 // Render all assignments in the list  
@@ -80,13 +80,13 @@ function renderAssignments(title, assignmentList) {
     return (
         <Container maxWidth="md" align="center" >
             {(title !== "") &&
-                (<Box my={3} >
+                (<Box my={3} mt={4}>
                     <PageHeading>
                         {title}
                     </PageHeading>
                 </Box>)}
             <Box align="left" mt={1}>
-                <Grid container justify="center" spacing={2}>
+                <Grid container justify="center" spacing={3}>
                     {assignmentList.map((assignment, index) => (
                         <Grid item xs={12} key={index}>
                             <AssignmentCard assignment={assignment} />

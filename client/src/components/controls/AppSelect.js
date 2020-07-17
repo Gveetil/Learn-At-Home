@@ -14,8 +14,7 @@ export default function AppSelect(props) {
     const classes = useStyles();
     return (
         <FormControl required fullWidth
-            color="secondary"
-            variant="filled">
+            color="secondary">
             <InputLabel id={props.name}>{props.label}</InputLabel>
             <Select
                 labelId={props.name}

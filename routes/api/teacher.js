@@ -19,6 +19,11 @@ router
     .delete(assignmentController.delete);
 
 router
+    .route("/submission")
+    .post(submissionController.createRatingOnly)
+    .put(submissionController.update);
+
+router
     .route("/submission/:type")
     .get(submissionController.fetchAllSubmissions);
 

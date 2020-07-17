@@ -33,15 +33,11 @@ export const RoundedButton = withStyles({
         marginTop: "auto",
         borderRadius: "16px",
     },
-    label: {
-        fontSize: "0.8rem",
-        fontWeight: "500",
-    }
 })(Button);
 
-export const LinkButton = withStyles({
+export const SecondaryLinkButton = withStyles({
     root: {
-        color: theme.palette.linkButton.contrastText,
+        color: theme.palette.linkButton.secondaryText,
         backgroundColor: theme.palette.linkButton.main,
         '&:hover, &.active:hover': { backgroundColor: theme.palette.linkButton.hover, },
         padding: theme.spacing(0.6),
@@ -61,25 +57,24 @@ export const LinkButton = withStyles({
     },
     label: {
         textTransform: 'none',
-        fontSize: "0.8rem",
-        fontWeight: "500",
     }
 })(Button);
 
 export const PageHeading = withStyles({
     root: {
-        color: theme.palette.primary[700],
+        color: theme.palette.primary.contrastText,
         margin: theme.spacing(1),
         fontSize: '1.3rem',
         width: '100%',
         textAlign: 'left',
-        fontFamily: "Roboto,Arial,Helvetica,sans-serif",
     },
 })(Typography);
 
 // Regular Button used in the application 
 export const AppButton = withStyles({
     root: {
+        margin: theme.spacing(0.5),
+        borderRadius: "16px",
         padding: theme.spacing(0.6),
         paddingRight: theme.spacing(1.7),
         paddingLeft: theme.spacing(1.2),
@@ -94,7 +89,33 @@ export const AppButton = withStyles({
             }
         }
     },
-})(RoundedButton);
+})(Button);
+
+export const LinkButton = withStyles({
+    root: {
+        color: theme.palette.linkButton.contrastText,
+        backgroundColor: theme.palette.linkButton.main,
+        '&:hover, &.active:hover': { backgroundColor: theme.palette.linkButton.hover, },
+        padding: theme.spacing(0.6),
+        margin: 0,
+        paddingRight: theme.spacing(1),
+        paddingLeft: theme.spacing(1),
+        '& > span > svg': {
+            marginRight: theme.spacing(0.6),
+        },
+        borderRadius: "4px",
+        marginTop: "auto",
+        [theme.breakpoints.down('xs')]: {
+            '& > span > svg': {
+                marginRight: theme.spacing(0.5),
+                width: 0,
+            }
+        }
+    },
+    label: {
+        textTransform: 'none',
+    }
+})(Button);
 
 export const NavigationTitle = withStyles({
     root: {
