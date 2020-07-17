@@ -41,13 +41,15 @@ function LeftNavPanel(props) {
                 <Drawer
                     variant="temporary"
                     anchor="left"
-                    open={state.showLeftNav}
+                    open={!state.showLeftNav}
                     onClose={handleLeftNavToggle}
                     ModalProps={{
                         keepMounted: true,
                     }}
                 >
-                    {props.children}
+                    <div onClick={handleLeftNavToggle} >
+                        {props.children}
+                    </div>
                 </Drawer>
             </Hidden>
             <Hidden xsDown>

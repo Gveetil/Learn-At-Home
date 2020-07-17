@@ -69,9 +69,17 @@ export default function AppTreeItem(props) {
     let history = useHistory();
     const { labelText, labelIcon: LabelIcon, linkTo, ...other } = props;
 
+    const handleClick = (event, linkTo, childNodes) => {
+        if (linkTo !== "")
+            history.push(linkTo);
+        if (childNodes) {
+            event.stopPropagation();
+        }
+    };
+
     return (
         <TreeItem
-            onClick={() => (linkTo !== "") ? history.push(linkTo) : ""}
+            onClick={(event) => handleClick(event, linkTo, props.children)}
             label={
                 < div className={classes.labelRoot} >
                     <LabelIcon color="inherit" className={classes.labelIcon} />

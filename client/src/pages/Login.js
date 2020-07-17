@@ -54,7 +54,7 @@ function Login(props) {
             <Container maxWidth="sm">
                 <Paper elevation={3}>
                     <form noValidate autoComplete="off">
-                        <Box display="flex" align="center" flexGrow={1} p={2} py={4}>
+                        <Box display="flex" align="center" flexGrow={1} m={4} py={4}>
                             <Grid container spacing={3} direction="row" alignContent="stretch"
                                 justify="center" alignItems="center" >
                                 <Grid item xs={12} md={10} >
