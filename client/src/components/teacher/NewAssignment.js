@@ -71,6 +71,14 @@ function NewAssignment(props) {
                 setFormFields({ ...formFields, [name]: isLearningTask });
             }
             return;
+        } else if (name === "SubjectId") {
+            // Reset class selection if subject is updated
+            setFormFields({
+                ...formFields,
+                classes: [],
+                [name]: value,
+            });
+            return;
         }
 
         setFormFields({ ...formFields, [name]: value });

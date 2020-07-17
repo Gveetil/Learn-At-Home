@@ -19,10 +19,7 @@ export default function MultiSelectClass(props) {
             multiple
             value={props.value}
             id="Class"
-            options={teacherState.classSubjects
-                .filter((item) => item.SubjectId === props.subjectId)
-                .filter((item, index) =>
-                    isUniqueClass(teacherState.classSubjects, item, index))}
+            options={fetchUniqueClasses(teacherState.classSubjects, props.subjectId)}
             disableCloseOnSelect
             getOptionLabel={(option) => option.ClassName}
             onChange={props.onChange}
@@ -48,6 +45,14 @@ export default function MultiSelectClass(props) {
             )}
         />
     );
+}
+
+// This function returns a list of all classes assigned to the teacher
+// for a given subject
+function fetchUniqueClasses(itemArray, subjectId) {
+    const subjectList = itemArray.filter((item) => item.SubjectId === subjectId);
+    return subjectList.filter((item, index) =>
+        isUniqueClass(subjectList, item, index));
 }
 
 // This function returns true if the class is the first instance in the given array  
