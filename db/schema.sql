@@ -2,6 +2,9 @@ DROP DATABASE IF EXISTS school_db;
 CREATE DATABASE school_db;
 USE school_db;
 
+DROP VIEW IF EXISTS `AssignmentSubmissions`;
+DROP VIEW IF EXISTS `StudentAssignments`;
+DROP VIEW IF EXISTS `UserClassSubjects`;
 DROP TABLE IF EXISTS `SubmissionLinks`;
 DROP TABLE IF EXISTS `Submissions`;
 DROP TABLE IF EXISTS `AssignmentClass`;
@@ -9,7 +12,7 @@ DROP TABLE IF EXISTS `AssignmentLinks`;
 DROP TABLE IF EXISTS `Assignments`;
 DROP TABLE IF EXISTS `TeacherClassSubjects`;
 DROP TABLE IF EXISTS `Ratings`;
-DROP TABLE IF EXISTS `Students`;
+DROP TABLE IF EXISTS `StudentClass`;
 DROP TABLE IF EXISTS `Class`;
 DROP TABLE IF EXISTS `GradeSubjects`;
 DROP TABLE IF EXISTS `Subjects`;

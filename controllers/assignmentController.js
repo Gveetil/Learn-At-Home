@@ -102,6 +102,7 @@ function getAssignmentFilter(assignmentType) {
         case "posted": {
             return {
                 postedDate: { [db.Sequelize.Op.ne]: null },
+                "$AssignmentSubmissions.NotMarked$": { [db.Sequelize.Op.gt]: 0 },
             };
         }
         case "completed": {
