@@ -22,18 +22,13 @@ async function downloadFile(path, fileType) {
 
 // Uploads a set of files to dropbox and returns the details as an array
 async function uploadFiles(files) {
-    try {
-        const dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
-        const uploaded = [];
-        for (const file of files) {
-            const uploadedFile = await uploadFile(dbx, file);
-            uploaded.push(uploadedFile);
-        }
-        return uploaded;
-    } catch (error) {
-        console.log(error.message);
-        return false;
+    const dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
+    const uploaded = [];
+    for (const file of files) {
+        const uploadedFile = await uploadFile(dbx, file);
+        uploaded.push(uploadedFile);
     }
+    return uploaded;
 }
 
 // Upload a given file to dropbox and return the details as an object
