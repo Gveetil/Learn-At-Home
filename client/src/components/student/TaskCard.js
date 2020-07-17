@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import format from 'date-fns/format';
-import { Typography, Divider, Box, CardContent, Button, Collapse } from '@material-ui/core';
+import { Typography, Divider, Box, CardContent, Collapse } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import { StudentContextAction, useStudentContext } from '../../context/StudentContext';
@@ -16,7 +16,6 @@ import DropboxHelper from "../../utils/DropboxHelper";
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import CancelIcon from '@material-ui/icons/Cancel';
 import API from '../../utils/API';
-import theme from '../../utils/theme';
 
 // Styles used by this component
 const useStyles = makeStyles((theme) => ({
@@ -139,7 +138,8 @@ export default function TaskCard(props) {
                             {format(new Date(props.task.postedDate), "dd MMMM yyyy")}
                         </Typography>
                     </Box>
-                    {(props.task.dueDate || props.isSubmitted) &&
+                    {((props.task.dueDate && !props.isSubmitted) ||
+                        (props.isSubmitted && props.task.Submissions[0].submissionDate)) &&
                         <Box display="flex" flexWrap="nowrap" flexGrow={0} alignItems="center">
                             <Typography variant="subtitle2" >
                                 {(props.task.isLearningTask) ?
@@ -178,14 +178,21 @@ export default function TaskCard(props) {
                     <>
                         <Divider color="secondary" />
                         < Box pt={1} width="100%">
-                            <Box display="flex" flexWrap="nowrap" alignItems="center">
+                            {props.task.Submissions[0].submissionDate &&
+                                <>
+                                    <Box display="flex" flexWrap="nowrap" alignItems="center">
+                                        <Typography variant="subtitle2" component="p" >
+                                            Links Submitted
+                                    </Typography>
+                                    </Box>
+                                    <Box justifySelf="flex-start">
+                                        <URLViewer pt="1" value={props.task.Submissions[0].SubmissionLinks} />
+                                    </Box>
+                                </>}
+                            {(!props.task.Submissions[0].submissionDate) &&
                                 <Typography variant="subtitle2" component="p" >
-                                    Links Submitted
-                            </Typography>
-                            </Box>
-                            <Box justifySelf="flex-start">
-                                <URLViewer pt="1" value={props.task.Submissions[0].SubmissionLinks} />
-                            </Box>
+                                    Submission Closed by Teacher
+                                </Typography>}
                             {props.task.Submissions[0].comment &&
                                 <>
                                     <Box display="flex" flexWrap="nowrap" mt={1} alignItems="center">

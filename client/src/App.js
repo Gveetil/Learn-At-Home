@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Suspense, lazy } from "react";
 import 'typeface-mada';
+import Login from "./pages/Login";
 import useAuthentication from "./utils/useAuthentication";
-import StudentDashboard from './pages/StudentDashboard';
-import TeacherDashboard from './pages/TeacherDashboard';
 import { TeacherProvider } from "./context/TeacherContext";
 import { StudentProvider } from "./context/StudentContext";
-import Login from "./pages/Login";
+const StudentDashboard = lazy(() => import('./pages/StudentDashboard'));
+const TeacherDashboard = lazy(() => import('./pages/TeacherDashboard'));
 
 // Renders the main application root component
 function App() {
@@ -15,14 +15,18 @@ function App() {
   function getUserPage(accessTypeId) {
     if (accessTypeId === auth.UserAccessType.Teacher) {
       return (
-        <TeacherProvider>
-          <TeacherDashboard handleLogout={auth.handleLogout} />
-        </TeacherProvider>);
+        <Suspense fallback={<div>Loading ...</div>}>
+          <TeacherProvider>
+            <TeacherDashboard handleLogout={auth.handleLogout} />
+          </TeacherProvider>
+        </Suspense>);
     } else if (accessTypeId === auth.UserAccessType.Student) {
       return (
-        <StudentProvider>
-          <StudentDashboard handleLogout={auth.handleLogout} />
-        </StudentProvider>);
+        <Suspense fallback={<div>Loading ...</div>}>
+          <StudentProvider>
+            <StudentDashboard handleLogout={auth.handleLogout} />
+          </StudentProvider>
+        </Suspense>);
     }
     return "";
   }
