@@ -18,7 +18,11 @@ module.exports = {
       const result = await db.UserClassSubjects.findAll({
         where: {
           UserId: request.user.id,
-        }
+        },
+        order: [
+          ["SubjectId", "ASC"],
+          ["ClassId", "ASC"],
+        ],
       });
       return response.json(result);
 
