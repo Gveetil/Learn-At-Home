@@ -25,13 +25,13 @@ export default function URLListView(props) {
 
     // Add link to list
     const handleClickAddLink = (event) => {
-        const newURL = url.trim().toLowerCase();
+        const newURL = url.trim();
         setValidationMessage("");
         if (newURL === "") {
             setValidationMessage("Url cannot be empty!");
             return;
         }
-        if (props.value.find(item => (item.link === newURL))) {
+        if (props.value.find(item => (item.link.toLowerCase() === newURL.toLowerCase()))) {
             setValidationMessage("Url already exists in the list!");
             return;
         }

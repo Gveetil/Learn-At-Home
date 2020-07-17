@@ -20,7 +20,6 @@ export default function MultiSelectClass(props) {
             value={props.value}
             id="Class"
             options={fetchUniqueClasses(teacherState.classSubjects, props.subjectId)}
-            disableCloseOnSelect
             getOptionLabel={(option) => option.ClassName}
             onChange={props.onChange}
             renderOption={(option, { selected }) => (
