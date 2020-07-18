@@ -158,7 +158,9 @@ export default function TaskCard(props) {
                 <Typography variant="subtitle2" component="p" >
                     Instructions
                 </Typography>
-                <Typography variant="body2" component="p" align="justify" >
+                <Typography variant="body2" component="p"
+                    style={{ whiteSpace: 'pre-wrap' }}
+                    align="justify" >
                     {props.task.instructions}
                 </Typography>
                 <Box justifySelf="flex-start">
@@ -215,7 +217,9 @@ export default function TaskCard(props) {
                                             </Box>
                                             <Box border={1} mt={1} p={1} width="100%" borderColor="grey.300"
                                                 className={classes.commentBox} >
-                                                <Typography variant="body2" component="p" align="justify">
+                                                <Typography variant="body2" component="p"
+                                                    style={{ whiteSpace: 'pre-wrap' }}
+                                                    align="justify">
                                                     {props.task.Submissions[0].comment}
                                                 </Typography>
                                             </Box>

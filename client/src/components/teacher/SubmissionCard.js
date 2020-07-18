@@ -228,7 +228,9 @@ export default function SubmissionCard(props) {
                                 <Typography variant="subtitle2" >
                                     Feedback Comment
                                 </Typography>
-                                <Typography variant="body2" component="p" align="justify">
+                                <Typography variant="body2" component="p"
+                                    style={{ whiteSpace: 'pre-wrap' }}
+                                    align="justify">
                                     {props.Submission.comment}
                                 </Typography>
                             </>}

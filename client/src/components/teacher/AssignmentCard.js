@@ -119,7 +119,9 @@ export default function AssignmentCard(props) {
                 <Typography variant="subtitle2" component="p" >
                     Instructions
                 </Typography>
-                <Typography variant="body2" component="p" align="justify" >
+                <Typography variant="body2" component="p"
+                    style={{ whiteSpace: 'pre-wrap' }}
+                    align="justify" >
                     {props.assignment.instructions}
                 </Typography>
                 <URLViewer pb={1} value={props.assignment.AssignmentLinks} />
