@@ -5,9 +5,8 @@
 Learn@Home is a home schooling solution that aims to simplify the process of creating, distributing, and grading primary school assignments. It helps teachers and students stay up to date with their lessons and homework. <br>
 <br>
 
-![Learn At Home](client/public/images/readme_learn_at_home.png "Learn At Home")<br><br>
+![Learn At Home](client/public/images/readme_login.png "Learn At Home")<br><br>
 
-## Application Access 
 The Application can be accessed using the below link: <br>
 [https://learn-at-home.herokuapp.com/](https://learn-at-home.herokuapp.com/)
 
@@ -30,16 +29,16 @@ Alternate Teachers / Students set up in the system: <br>
 ## Table of Contents 
 
 - [Technical Features](#technical-features)
- - [MERN Stack](#mern-stack)
- - [Dropbox](#dropbox)
- - [User Authentication and Security](#user-authentication-and-security)
- - [Responsive Web Design](#responsive-web-design)
+  - [MERN Stack](#mern-stack)
+  - [Dropbox](#dropbox)
+  - [User Authentication and Security](#user-authentication-and-security)
+  - [Responsive Web Design](#responsive-web-design)
 - [Usage Guidelines](#usage-guidelines)
- - [Login](#login)
- - [New Assignment - Teacher](#new-assignment---teacher)
- - [View Assignments - Teacher](#view-assignments---teacher)
- - [View Submissions - Teacher](#view-submissions---teacher)
- - [Student Dashboard](#student-dashboard)
+  - [Login](#login)
+  - [New Assignment - Teacher](#new-assignment---teacher)
+  - [View Assignments - Teacher](#view-assignments---teacher)
+  - [View Submissions - Teacher](#view-submissions---teacher)
+  - [Student Dashboard](#student-dashboard)
 <br><br>
 
 ## Technical Features
