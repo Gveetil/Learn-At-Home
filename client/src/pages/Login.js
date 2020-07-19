@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Container, Grid, Paper, TextField, Box } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
-import { RoundedButton } from '../components/styles';
+import { RoundedButton, LinkButton } from '../components/styles';
 import AppLogo from '../components/AppLogo';
+import UserDialog from '../components/UserDialog';
 
 // Styles used by this component
 const useStyles = makeStyles((theme) => ({
@@ -19,7 +20,12 @@ const useStyles = makeStyles((theme) => ({
 // The application login page 
 function Login(props) {
     const classes = useStyles();
-    const [formFields, setFormFields] = useState({ userName: '', password: '', error: '' });
+    const [formFields, setFormFields] = useState({
+        userName: '',
+        password: '',
+        error: '',
+        openUserSelection: false,
+    });
 
     // Update local state on change of user name or password
     const handleInputChange = (event) => {
@@ -47,6 +53,32 @@ function Login(props) {
         }
     }
 
+    // Opens the demo user selection dialog
+    const openUserSelection = () => {
+        setFormFields({
+            ...formFields,
+            openUserSelection: true,
+        });
+    };
+
+    // Closes the demo user selection dialog
+    const closeUserSelection = (value) => {
+        if (value) {
+            // If user is selected, update details
+            setFormFields({
+                ...formFields,
+                userName: value,
+                password: value,
+                openUserSelection: false,
+            });
+            return;
+        }
+        setFormFields({
+            ...formFields,
+            openUserSelection: false,
+        });
+    };
+
     return (
         <Box height="100vh" width="100vw" display="flex"
             justifyContent="center"
@@ -54,7 +86,7 @@ function Login(props) {
             <Container maxWidth="sm">
                 <Paper elevation={3}>
                     <form noValidate autoComplete="off">
-                        <Box display="flex" align="center" flexGrow={1} m={4} py={4}>
+                        <Box display="flex" align="center" flexGrow={1} m={4} pt={4} pb={3}>
                             <Grid container spacing={3} direction="row" alignContent="stretch"
                                 justify="center" alignItems="center" >
                                 <Grid item xs={12} md={10} >
@@ -89,6 +121,13 @@ function Login(props) {
                                             type="submit"
                                             variant="contained">Sign In</RoundedButton>
                                     </Box>
+                                    <Box mt={1}>
+                                        <LinkButton
+                                            onClick={openUserSelection}>
+                                            Pick a Demo User
+                                        </LinkButton>
+                                    </Box>
+                                    <UserDialog open={formFields.openUserSelection} onClose={closeUserSelection} />
                                 </Grid>
                             </Grid>
                         </Box>
@@ -98,5 +137,4 @@ function Login(props) {
         </Box >
     );
 }
-
 export default Login;

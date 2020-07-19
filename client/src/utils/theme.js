@@ -105,6 +105,12 @@ const theme = createMuiTheme({
                 color: "blue",
             },
         },
+        MuiDialogTitle: {
+            root: {
+                backgroundColor: blueGrey[100],
+                color: blueGrey[700],
+            }
+        }
     },
     typography: {
         "fontFamily": `"Mada", "Cantarell", "Open Sans", sans-serif`,
