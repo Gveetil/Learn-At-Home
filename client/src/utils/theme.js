@@ -59,7 +59,7 @@ const theme = createMuiTheme({
             background: blueGrey[50],
             hover: grey[100],
             sidePanel: grey[100],
-            title: blueGrey[50],
+            title: white,
         },
         delete: {
             main: "#ef5350",
